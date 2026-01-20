@@ -607,7 +607,7 @@
                 </div>
             </div>
         </div>
-
+        
         <div id="modale-sae15" class="ecran-modale">
             <a href="#projets" class="fond-flou"></a>
             <div class="boite-modale">
@@ -625,30 +625,35 @@
 
                     <h4>Ma mission</h4>
                     <p>Au-delà de l'utilisation de la librairie <strong>Pandas</strong> pour manipuler les DataFrames (filtrage par groupe, tri chronologique), j'ai été confronté à un problème d'intégrité des données.</p>
-                    <p>Au-delà de l'utilisation de la librairie <strong>Pandas</strong> pour manipuler les données, j'ai été confronté à un problème d'intégrité critique. Le script fourni par l'enseignant pour la conversion <code>.ics</code> vers <code>.csv</code> comportait une faille logique : l'absence de gestion des fuseaux horaires, entraînant un décalage de 2 heures sur tout le planning.</p>
+                    <p>J'ai aussi été confronté à <strong>un problème d'intégrité critique</strong>. Le script fourni par l'enseignant pour la conversion <code>.ics</code> vers <code>.csv</code> comportait une faille logique : l'absence de gestion des fuseaux horaires, entraînant un décalage de 2 heures sur tout le planning.</p>
                     <p>J'ai audité le code pour identifier l'anomalie et développé un correctif gérant l'offset UTC. Soucieux de la réussite collective, j'ai documenté et partagé ce patch <strong>avec l'ensemble de la promotion</strong>, permettant à mes camarades d'éviter cette erreur silencieuse dans leurs propres projets.</p>
 
                     <h4>Résultat</h4>
                     <p>Le programme final permet d'exporter un planning précis et sans erreur. Voici un aperçu de la sortie du script :</p>
 
                     <div class="terminal-virtuel">
-                        <span class="terminal-line cmd-input">> python script_vacances.py --groupe BUT1_TP4</span>
-                        <span class="terminal-line">[+] Chargement du fichier ADE.ics...</span>
-                        <span class="terminal-line cmd-warn">[!] Détection Timezone : Europe/Paris. Correction +2h appliquée.</span>
-                        <span class="terminal-line">[+] Conversion ICS -> CSV terminée avec succès.</span>
-                        <span class="terminal-line">[+] Analyse des périodes de vacances...</span>
-                        <br>
-                        <span class="terminal-line">--- RÉSULTATS POUR LE GROUPE TP4 ---</span>
-                        <span class="terminal-line">VACANCES TOUSSAINT :</span>
-                        <span class="terminal-line">-> Reprise : Lundi 06 Nov à 08:00</span>
-                        <span class="terminal-line">-> Cours : R1.01 - Initiation Réseaux (Amphi B)</span>
-                        <br>
-                        <span class="terminal-line">VACANCES NOEL :</span>
-                        <span class="terminal-line">-> Reprise : Lundi 08 Jan à 13:30</span>
-                        <span class="terminal-line">-> Cours : R1.03 - Architecture Ordi (Salle B012)</span>
-                        <br>
-                        <span class="terminal-line cmd-success">[SUCCESS] Export terminé.</span>
+                        <span class="terminal-line cmd-input">> python main.py</span><br>
+                        <span class="terminal-line">Quel est votre groupe de TP ?</span>
+                        <span class="terminal-line">1) TP1</span>
+                        <span class="terminal-line">2) TP2</span>
+                        <span class="terminal-line">3) TP3</span>
+                        <span class="terminal-line">4) TP4</span>
+                        <span class="terminal-line cmd-input">> 4</span><br>
+                        <span class="terminal-line">...</span><br>
+                        <span class="terminal-line">--- Rentrée des Vacances d'hiver ---</span>
+                        <span class="terminal-line">Date   : 2026-02-23</span>
+                        <span class="terminal-line">Heure  : 09:00</span>
+                        <span class="terminal-line">Module : Téléphonie2</span>
+                        <span class="terminal-line">Salle  : A5-A5bis</span>
+                        <span class="terminal-line">Prof   : TOUSSAINT JOEL</span><br>
+                        <span class="terminal-line">...</span>
                     </div>
+
+                    <br>
+                    <a href="https://github.com/melvinmage/sae15/tree/main" class="bouton-doc" target="_blank">
+                        <i class="fa-brands fa-python"></i>
+                        <span>Voir le projet</span>
+                    </a>
 
                     <h4>La leçon "Cyber"</h4>
                     <p>Ce projet m'a prouvé qu'en informatique, on ne peut jamais faire confiance aveuglément à la donnée brute ou aux scripts par défaut. La vérification de l'intégrité (ici, les horaires) est une étape clé que je retrouve aujourd'hui dans l'analyse de logs en sécurité.</p>
@@ -724,6 +729,7 @@
 </body>
 
 </html>
+
 
 
 
