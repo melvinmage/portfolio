@@ -566,7 +566,7 @@ input[name="type-competence"] {
 
 .grille-competences {
     display: none; 
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 25px;
     animation: apparitionDouce 0.5s ease;
 }
@@ -1148,4 +1148,5 @@ footer {
 
 .cmd-input { color: #fff; }
 .cmd-warn { color: #fbbf24; } /* Jaune */
+
 .cmd-success { color: #33ff33; font-weight: bold; }
