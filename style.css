@@ -1056,6 +1056,19 @@ input[name="type-competence"] {
    12. FOOTER & RESPONSIVE
 ========================================================================== */
 
+/* --- MENU BURGER --- */
+.burger-icon {
+    display: none; /* Caché sur PC */
+    font-size: 1.8rem;
+    color: var(--couleur-accent);
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.burger-icon:hover {
+    color: #fff;
+}
+
 footer {
     text-align: center; 
     padding: 60px 0; 
@@ -1073,57 +1086,75 @@ footer {
 }
 
 /* --- VERSION MOBILE (Tablettes et Téléphones) --- */
+/* --- VERSION MOBILE (Tablettes et Téléphones) --- */
 @media (max-width: 768px) {
-    .profil-flex { 
-        flex-direction: column-reverse; 
-        text-align: center; 
-        padding: 30px; 
-    }
-  
-    /* Je m'assure que tout passe en colonne */
-    .grille-double, 
-    .liens-nav, 
-    .navigation, 
-    .carte-projet { 
-        flex-direction: column; 
+    /* --- AJUSTEMENTS SECTION "À PROPOS" MOBILE --- */
+    .profil-flex {
+        /* On garde une direction colonne, mais sans l'image */
+        flex-direction: column;
+        align-items: center; /* Centre le contenu horizontalement */
+        text-align: center; /* Centre tout le texte à l'intérieur */
     }
 
-    .grille-double, 
-    .liens-nav { 
-        grid-template-columns: 1fr; 
-    }
-  
-    .navigation { 
-        gap: 20px; 
+    .photo-profil {
+        /* On cache simplement l'image */
+        display: none;
     }
 
-    .carte-projet { 
-        text-align: center; 
+    .profil-contenu {
+        /* Le contenu prend toute la largeur et le texte est justifié ou centré */
+        width: 100%;
+        padding: 0 10px; /* Une petite marge interne pour ne pas toucher les bords */
     }
 
-    .carte-formation { 
-        padding: 20px; 
-    }
-  
-    .boite-modale { 
-        width: 95%; 
-        padding: 20px; 
-    }
-  
-    /* Sur mobile, je centre le logo de la modale car il n'y a pas assez de place à droite */
-    .entete-modale { 
-        float: none; 
-        text-align: center; 
-        margin: 0 auto 20px auto; 
-    }
-  
-    .header-exp { 
-        flex-direction: column; 
-        align-items: flex-start; 
+    /* ... Suite de tes règles CSS mobile ... */
+
+    /* 1. On affiche l'icône burger */
+    .burger-icon {
+        display: block;
     }
 
-    .tags-skills { 
-        flex-wrap: wrap; 
+    /* 2. On garde le logo à gauche et le burger à droite */
+    .navigation {
+        flex-direction: row; /* Garde sur la même ligne */
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        gap: 0;
+    }
+
+    /* 3. On masque le menu par défaut et on le positionne en dessous */
+    .liens-nav {
+        position: absolute;
+        top: 100%; /* S'ouvre juste en dessous du header */
+        left: 0;
+        width: 100%;
+        background: rgba(15, 23, 42, 0.95); /* Fond sombre presque opaque */
+        backdrop-filter: blur(10px);
+        flex-direction: column;
+        align-items: center;
+        padding: 0;
+        max-height: 0; /* Caché par défaut */
+        overflow: hidden;
+        transition: max-height 0.4s ease, padding 0.4s ease;
+        border-bottom: var(--bordure-verre);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+    }
+
+    /* On réduit l'espace entre chaque lien (10px au lieu de 15px) */
+    .liens-nav li {
+        margin: 8px 0; 
+    }
+
+    /* On réduit le rembourrage en haut et en bas du menu ouvert */
+    .liens-nav.active {
+        max-height: 400px; /* Un peu moins haut */
+        padding: 15px 0; /* On resserre le haut et le bas */
+    }
+
+    .liens-nav a {
+        font-size: 1.1rem; /* Texte légèrement plus gros sur mobile */
+        font-weight: 600;
     }
 }
 
