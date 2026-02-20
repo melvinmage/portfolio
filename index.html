@@ -25,7 +25,12 @@
     <header>
         <nav class="navigation">
             <div class="logo">M²</div>
-            <ul class="liens-nav">
+            
+            <div class="burger-icon" id="burger-menu">
+                <i class="fas fa-bars"></i>
+            </div>
+
+            <ul class="liens-nav" id="nav-links">
                 <li><a href="#a-propos">À propos</a></li>
                 <li><a href="#formations">Formations</a></li>
                 <li><a href="#competences">Compétences</a></li>
@@ -712,16 +717,23 @@
         <p>© 2025 - MAGE Melvin</p>
     </footer>
 
+    <script>
+        const burger = document.getElementById('burger-menu');
+        const nav = document.getElementById('nav-links');
+        const links = document.querySelectorAll('.liens-nav a');
+
+        // Ouvre/Ferme le menu quand on clique sur le burger
+        burger.addEventListener('click', () => {
+            nav.classList.toggle('active');
+        });
+
+        // Referme le menu automatiquement quand on clique sur un lien
+        links.forEach(link => {
+            link.addEventListener('click', () => {
+                nav.classList.remove('active');
+            });
+        });
+    </script>
 </body>
 
 </html>
-
-
-
-
-
-
-
-
-
-
