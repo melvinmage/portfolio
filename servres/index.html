@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services Réseaux - Dashboard Dark Mode</title>
+    <style>
+        /* --- VARIABLES & RESET (DARK THEME) --- */
+        :root {
+            --bg-deep: #0B0E14;
+            --bg-grad: radial-gradient(circle at top right, #1a2235 0%, #0B0E14 100%);
+            --glass-bg: rgba(25, 30, 45, 0.6);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+            --text-main: #E2E8F0;
+            --text-muted: #94A3B8;
+            --accent-blue: #38BDF8;
+            --accent-purple: #818CF8;
+            --success: #10B981;
+            --error: #EF4444;
+            --locked: #334155;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background: var(--bg-deep);
+            background-image: var(--bg-grad);
+            background-attachment: fixed;
+            color: var(--text-main);
+            height: 100vh;
+            display: flex;
+            overflow: hidden;
+        }
+
+        /* --- GLASSMORPHISM UTILITIES --- */
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            box-shadow: var(--glass-shadow);
+        }
+
+        /* --- LAYOUT --- */
+        #sidebar {
+            width: 320px;
+            margin: 20px;
+            padding: 25px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 10;
+        }
+
+        #main-container {
+            flex: 1;
+            margin: 20px 20px 20px 0;
+            display: flex;
+            flex-direction: column;
+            z-index: 10;
+        }
+
+        #topbar {
+            padding: 20px 30px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #content-area {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        /* --- TYPOGRAPHY & COMPONENTS --- */
+        h1 { font-size: 1.4rem; text-align: center; color: var(--text-main); margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px;}
+        h2 { font-size: 1.8rem; color: var(--accent-blue); border-bottom: 1px solid var(--glass-border); padding-bottom: 10px; margin-bottom: 20px; }
+        h3 { font-size: 1.2rem; margin-bottom: 15px; color: var(--accent-purple); }
+        h4 { font-size: 1.05rem; margin-bottom: 10px; color: var(--text-main); }
+        p, li { margin-bottom: 12px; line-height: 1.7; color: var(--text-muted); }
+        ul { margin-left: 25px; margin-bottom: 15px;}
+        strong { color: var(--text-main); }
+        
+        .nav-btn {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid transparent;
+            color: var(--text-main);
+            padding: 16px 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            text-align: left;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-btn:not(.locked):hover { background: rgba(255,255,255,0.08); border-color: var(--glass-border); }
+        .nav-btn.active {
+            background: rgba(56, 189, 248, 0.15);
+            border: 1px solid var(--accent-blue);
+            color: var(--accent-blue);
+            font-weight: 600;
+        }
+        .nav-btn.locked {
+            color: var(--locked);
+            cursor: not-allowed;
+            background: rgba(0,0,0,0.2);
+        }
+        .status-icon { font-size: 1.1rem; }
+
+        .action-btn {
+            background: var(--accent-blue);
+            color: #000;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, filter 0.2s;
+        }
+        .action-btn:hover { filter: brightness(1.1); transform: translateY(-2px); }
+        .action-btn:disabled { background: var(--locked); color: #888; cursor: not-allowed; transform: none; }
+
+        /* --- PROGRESSION SYSTEM --- */
+        .xp-container { display: flex; align-items: center; gap: 15px; width: 350px; }
+        .xp-bar-bg {
+            flex: 1;
+            height: 10px;
+            background: rgba(0,0,0,0.4);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid var(--glass-border);
+        }
+        .xp-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+            transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .xp-text { font-weight: bold; font-family: monospace; font-size: 1.1rem; color: var(--accent-blue); }
+
+        /* --- MODULE SYSTEM --- */
+        .module { display: none; animation: fadeIn 0.4s ease forwards; }
+        .module.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- CONTENT BOXES --- */
+        .content-box {
+            padding: 20px;
+            margin-bottom: 20px;
+            background: rgba(0,0,0,0.3);
+            border-left: 4px solid var(--accent-purple);
+        }
+
+        /* --- QUIZ STYLING --- */
+        .quiz-section { margin-top: 40px; border-top: 1px dashed var(--glass-border); padding-top: 30px; }
+        .question-block { margin-bottom: 25px; background: rgba(0,0,0,0.2); padding: 20px; border-radius: 12px; border: 1px solid var(--glass-border); }
+        .question-text { font-weight: 600; color: var(--text-main); margin-bottom: 15px; font-size: 1.1rem;}
+        .options-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
+        
+        .opt-btn {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--glass-border);
+            padding: 12px 15px;
+            color: var(--text-muted);
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.2s;
+            font-size: 0.95rem;
+        }
+        .opt-btn:hover:not(:disabled) { background: rgba(255,255,255,0.1); color: var(--text-main); }
+        .opt-btn.selected { border-color: var(--accent-blue); background: rgba(56, 189, 248, 0.1); color: var(--text-main); }
+        .opt-btn.correct { background: rgba(16, 185, 129, 0.2); border-color: var(--success); color: var(--success); font-weight: bold; }
+        .opt-btn.wrong { background: rgba(239, 68, 68, 0.2); border-color: var(--error); color: var(--error); text-decoration: line-through; }
+
+        .quiz-result { margin-top: 20px; padding: 20px; border-radius: 12px; text-align: center; font-size: 1.2rem; display: none; }
+        .quiz-result.pass { background: rgba(16, 185, 129, 0.1); color: var(--success); border: 1px solid var(--success); }
+        .quiz-result.fail { background: rgba(239, 68, 68, 0.1); color: var(--error); border: 1px solid var(--error); }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.4); }
+    </style>
+</head>
+<body>
+
+    <nav id="sidebar" class="glass-panel">
+        <h1>Service Réseau</h1>
+        <button class="nav-btn active" data-target="mod-1" id="nav-mod-1">1. Transport <span class="status-icon">❌</span></button>
+        <button class="nav-btn" data-target="mod-2" id="nav-mod-2">2. HTTP <span class="status-icon">❌</span></button>
+        <button class="nav-btn" data-target="mod-3" id="nav-mod-3">3. DHCP <span class="status-icon">❌</span></button>
+        <button class="nav-btn" data-target="mod-4" id="nav-mod-4">4. SSH <span class="status-icon">❌</span></button>
+        <button class="nav-btn" data-target="mod-5" id="nav-mod-5">5. DNS <span class="status-icon">❌</span></button>
+        <div style="flex-grow: 1;"></div>
+        <button class="nav-btn locked" data-target="mod-final" id="nav-mod-final" style="border-color: var(--accent-purple);">Examen Final <span>🔒</span></button>
+    </nav>
+
+    <main id="main-container">
+        <header id="topbar" class="glass-panel">
+            <h3 style="margin:0; color:var(--text-main);">Cours & Validations</h3>
+            <div class="xp-container">
+                <span style="color:var(--text-muted); font-size:0.9rem;">Progression Globale</span>
+                <div class="xp-bar-bg">
+                    <div class="xp-bar-fill" id="xp-fill"></div>
+                </div>
+                <span class="xp-text"><span id="xp-counter">0</span> / 600 XP</span>
+            </div>
+        </header>
+
+        <section id="content-area" class="glass-panel">
+            
+            <div id="mod-1" class="module active">
+                <h2>1. La Couche Transport</h2>
+                <p>La couche transport se positionne au-dessus de la couche réseau pour fournir aux applications un <strong>canal de communication de bout en bout</strong>, sans qu'elles aient à se soucier du fonctionnement exact de l'infrastructure matérielle ou du routage.</p>
+                
+                <div class="glass-panel content-box">
+                    <h3>TCP et UDP : Les deux géants</h3>
+                    <p>La couche transport découpe les données des applications. Ces blocs d'informations se nomment <strong>Segments (pour TCP)</strong> ou <strong>Datagrammes (pour UDP)</strong>.</p>
+                    <ul>
+                        <li><strong>TCP (Transmission Control Protocol) :</strong> Protocole <strong>orienté connexion</strong> qui garantit l'intégrité des données. Il utilise le <strong>Three-Way Handshake</strong> (SYN, SYN-ACK, ACK) pour établir une connexion fiable. Il s'assure via des acquittements que rien n'est perdu (ex: Web, FTP).</li>
+                        <li><strong>UDP (User Datagram Protocol) :</strong> Protocole <strong>minimaliste, sans connexion</strong> et en mode datagramme. Très rapide, mais ne garantit rien. Idéal pour la <strong>Voix sur IP (VoIP)</strong> ou le <strong>streaming vidéo</strong>. Si un datagramme UDP est corrompu ou perdu, il est <strong>jeté silencieusement</strong> par le récepteur (l'application ne reçoit rien du tout, pas d'avertissement).</li>
+                    </ul>
+                    <h4>En-tête UDP</h4>
+                    <p>L'en-tête UDP est très court (8 octets). Il ne contient que 4 champs : le <strong>Port Source</strong>, le <strong>Port Destination</strong>, la <strong>Longueur</strong> et la <strong>Somme de contrôle</strong> (Checksum). Il n'y a <em>pas de numéro de séquence</em> contrairement à TCP.</p>
+                </div>
+
+                <div class="glass-panel content-box">
+                    <h3>Le principe des Ports (16 bits)</h3>
+                    <p>Pour gérer plusieurs applications sur une même machine, on ajoute un <strong>numéro de port codé sur 16 bits</strong> à l'adresse IP. Au niveau d'un serveur, le numéro de port permet à <strong>plusieurs clients de se connecter au même service</strong> simultanément.</p>
+                    <p>Les ports sont divisés en catégories :</p>
+                    <ul>
+                        <li><strong>Well-known (Bien connus) :</strong> De <strong>1 à 1023</strong> (Réservés aux services standards comme HTTP:80, HTTPS:443, SSH:22).</li>
+                        <li><strong>Enregistrés :</strong> De 1024 à 49151.</li>
+                        <li><strong>Dynamiques / Privés :</strong> De 49152 à 65535 (souvent utilisés par les clients pour initier la connexion).</li>
+                    </ul>
+                </div>
+
+                <div class="quiz-section" id="quiz-container-1"></div>
+            </div>
+
+            <div id="mod-2" class="module">
+                <h2>2. Le Service HTTP</h2>
+                <p><strong>HTTP</strong> signifie <strong>HyperText Transfer Protocol</strong>. C'est le protocole à la base du Web, fonctionnant selon un modèle <strong>Client-Serveur</strong>. Il s'appuie sur le protocole de transport TCP.</p>
+                
+                <div class="glass-panel content-box">
+                    <h3>Fonctionnement & Ports</h3>
+                    <p>Le serveur écoute généralement de manière statique sur le port <strong>80 (HTTP)</strong> ou le port <strong>443 (HTTPS - version chiffrée)</strong>. Le client (le navigateur web), quant à lui, réserve son port de communication <strong>de manière dynamique (port éphémère) lors de la requête</strong>.</p>
+                    <p>Si le serveur reçoit une requête HTTP bien formulée, <strong>il renvoie le contenu demandé accompagné d'un 'Content-Type'</strong> (ex: text/html) pour indiquer au navigateur comment l'afficher.</p>
+                </div>
+
+                <div class="glass-panel content-box">
+                    <h3>Les Méthodes et Codes de Statut</h3>
+                    <p>Le client communique ses intentions via des "méthodes" :</p>
+                    <ul>
+                        <li><strong>GET :</strong> Pour <strong>demander le chargement d'une page</strong> ou d'une ressource.</li>
+                        <li><strong>POST :</strong> Pour <strong>envoyer les données d'un formulaire</strong> au serveur.</li>
+                        <li><strong>PUT :</strong> Pour modifier une ressource.</li>
+                        <li><strong>DELETE :</strong> Spécifiquement utilisée pour <strong>supprimer une ressource</strong>.</li>
+                    </ul>
+                    <p>Le serveur répond avec des codes à 3 chiffres :</p>
+                    <ul>
+                        <li><strong>200 OK :</strong> Indique un succès absolu.</li>
+                        <li><strong>404 Not Found :</strong> Indique que la page ou la ressource n'existe pas.</li>
+                    </ul>
+                </div>
+
+                <div class="quiz-section" id="quiz-container-2"></div>
+            </div>
+
+            <div id="mod-3" class="module">
+                <h2>3. Le Service DHCP</h2>
+                <p>Le rôle principal du <strong>Dynamic Host Configuration Protocol (DHCP)</strong> est <strong>l'allocation dynamique d'adresses IP et de configurations</strong> (Masque, Passerelle, DNS) pour éviter une configuration manuelle laborieuse. Il utilise le protocole de transport <strong>UDP</strong> sur les ports <strong>67 (serveur) et 68 (client)</strong>.</p>
+                
+                <div class="glass-panel content-box">
+                    <h3>Le processus D.O.R.A</h3>
+                    <p>C'est l'échange en 4 étapes lors de la connexion d'un nouveau client :</p>
+                    <ol>
+                        <li><strong>Discover :</strong> Le client cherche un serveur. Comme il ne connaît pas l'IP du serveur, il envoie sa requête en <strong>diffusion (Broadcast) sur l'adresse 255.255.255.255</strong>. Et comme il n'a pas encore d'IP, son IP source est <strong>0.0.0.0</strong>.</li>
+                        <li><strong>Offer :</strong> Le serveur répond avec une proposition (bail) contenant <strong>une adresse IP valide</strong>.</li>
+                        <li><strong>Request :</strong> Le client valide l'offre. S'il y a 2 serveurs DHCP sur le réseau, <strong>il n'accepte qu'une seule configuration</strong>. Par ce message, il <strong>avertit qu'il accepte une offre spécifique et décline les autres</strong>.</li>
+                        <li><strong>Acknowledge (ACK) :</strong> Le serveur confirme définitivement le bail.</li>
+                    </ol>
+                </div>
+
+                <div class="glass-panel content-box">
+                    <h3>Gestion du Bail IP</h3>
+                    <p>L'adresse est "louée". À <strong>la moitié (T/2) de la durée de vie du bail</strong>, le client va naturellement <strong>tenter de renouveler son bail auprès du serveur</strong>.</p>
+                    <p>Si la machine veut rendre son IP avant la fin (résiliation explicite), elle envoie un message <strong>DHCPRELEASE</strong>. Si le client détecte que l'IP proposée est déjà utilisée sur le réseau (conflit), il envoie un message <strong>DHCPDECLINE</strong>.</p>
+                </div>
+
+                <div class="quiz-section" id="quiz-container-3"></div>
+            </div>
+
+            <div id="mod-4" class="module">
+                <h2>4. Le Service SSH</h2>
+                <p><strong>SSH (Secure Shell)</strong> est un protocole qui remplace les <strong>anciens outils non sécurisés comme telnet et rsh</strong>. Il permet l'administration de machines à distance de façon sécurisée et écoute par défaut sur le <strong>port 22</strong>.</p>
+                
+                <div class="glass-panel content-box">
+                    <h3>La Cryptographie Hybride</h3>
+                    <p>SSH combine deux types de cryptographie pour allier sécurité et performance :</p>
+                    <ul>
+                        <li><strong>Asymétrique (Clé publique/privée) :</strong> Elle est très sécurisée mais nécessite des calculs trop complexes et lents pour envoyer de gros fichiers. Elle est donc utilisée <strong>uniquement au début pour générer et s'échanger une clé secrète partagée sans jamais l'envoyer en clair sur le réseau</strong> (grâce à l'algorithme de <strong>Diffie-Hellman</strong>). <em>Règle d'or : Un message chiffré avec la clé publique de Pam ne peut être déchiffré que par <strong>la clé privée de Pam</strong>.</em></li>
+                        <li><strong>Symétrique :</strong> Une fois la clé secrète partagée via l'étape 1, elle est utilisée pour chiffrer tout le reste du transfert de données en masse, car c'est beaucoup plus rapide.</li>
+                    </ul>
+                </div>
+
+                <div class="glass-panel content-box">
+                    <h3>Outils et Fonctionnalités Avancées</h3>
+                    <p>Sous Windows, le logiciel client SSH le plus populaire est <strong>PuTTY</strong>. SSH vient aussi avec des outils intégrés comme <strong>scp (Secure Copy Protocol)</strong>, qui permet de transférer des fichiers de manière sécurisée de machine à machine.</p>
+                    <p>Enfin, SSH permet le <strong>Tunneling</strong> : c'est une technique géniale pour <strong>faire passer (rediriger) un autre protocole (comme HTTP ou FTP) de manière chiffrée à l'intérieur de la session SSH</strong>.</p>
+                </div>
+
+                <div class="quiz-section" id="quiz-container-4"></div>
+            </div>
+
+            <div id="mod-5" class="module">
+                <h2>5. Le Service DNS</h2>
+                <p>Le <strong>Domain Name System (DNS)</strong> sert d'annuaire à Internet : il <strong>associe un nom "humain" (logique) à une adresse IP</strong> compréhensible par les machines. Il écoute généralement sur le port <strong>53 (UDP et TCP)</strong>.</p>
+                
+                <div class="glass-panel content-box">
+                    <h3>Historique et Hiérarchie</h3>
+                    <p>Avant l'invention du DNS, ce processus fastidieux se faisait <strong>grâce à un fichier local (ex: /etc/hosts en UNIX)</strong> mis à jour manuellement. Aujourd'hui, le DNS est hiérarchisé :</p>
+                    <ul>
+                        <li><strong>La Racine (.) :</strong> Il existe exactement <strong>13 serveurs "Racine"</strong> dans le monde.</li>
+                        <li><strong>Les TLD (Top Level Domain) :</strong> C'est l'<strong>extension de premier niveau</strong> (ex: .com, .fr, .net).</li>
+                        <li>Pour créer un sous-domaine (ex: <em>etu.uca.fr</em>), il faut obligatoirement l'autorisation de <strong>l'organisme gérant le domaine père (uca.fr)</strong>.</li>
+                        <li>Une <strong>Zone DNS</strong> est <strong>une partie de l'espace de noms DNS gérée par un serveur spécifique</strong>, contenant les enregistrements (A, MX...).</li>
+                    </ul>
+                </div>
+
+                <div class="glass-panel content-box">
+                    <h3>Méthodes de Recherche et Avantages</h3>
+                    <p>Il existe deux modes de résolution lorsqu'un serveur DNS local ne connaît pas la réponse :</p>
+                    <ul>
+                        <li><strong>Mode Itératif :</strong> Le <strong>serveur local fait tout le travail</strong> et interroge lui-même successivement la racine, puis le TLD, puis le serveur d'autorité.</li>
+                        <li><strong>Mode Récursif :</strong> Chaque serveur visité <strong>prend l'initiative d'interroger le serveur suivant à la place du demandeur</strong>.</li>
+                    </ul>
+                    <p>Un avantage majeur du DNS est la <strong>répartition de charge (Load Balancing)</strong>. En effet, <strong>un même nom de domaine peut renvoyer plusieurs adresses IP différentes</strong>, permettant de distribuer le trafic sur plusieurs serveurs web.</p>
+                </div>
+
+                <div class="quiz-section" id="quiz-container-5"></div>
+            </div>
+
+            <div id="mod-final" class="module">
+                <h2>Examen Final - Certification</h2>
+                <p>Ce QCM final comporte 15 questions tirées aléatoirement de l'ensemble du cours. Vous devez obtenir <strong>12/15</strong> pour valider définitivement la matière.</p>
+                <div class="quiz-section" id="quiz-container-final">
+                    <button class="action-btn" onclick="startFinalExam()" style="display:block; margin: 0 auto;">Démarrer l'examen final</button>
+                    <div id="final-exam-wrapper" style="display:none; margin-top: 30px;"></div>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <script>
+        // --- DATA BASE: QUIZZES ---
+        // 50 Questions directly pulled from the 119 pages PDF Context
+        const quizData = {
+            1: [
+                { q: "Quel est le rôle de la couche transport ?", opts: ["Gérer le routage matériel", "Fournir un canal de communication de bout en bout aux applications", "Traduire les adresses IP", "Sécuriser physiquement le câble"], ans: 1 },
+                { q: "Quel protocole de transport garantit l'intégrité des données via des acquittements ?", opts: ["UDP", "IP", "TCP", "HTTP"], ans: 2 },
+                { q: "Sur combien de bits est codé un numéro de port ?", opts: ["8 bits", "16 bits", "32 bits", "64 bits"], ans: 1 },
+                { q: "Quelle plage correspond aux ports dits 'Well-known' (Bien connus) ?", opts: ["1024 - 49151", "49152 - 65535", "1 - 1023", "Tous les ports"], ans: 2 },
+                { q: "Comment le protocole TCP établit-il une connexion ?", opts: ["Via un datagramme unique", "Par le Three-way Handshake (SYN, SYN-ACK, ACK)", "Via une requête DORA", "Il ne crée pas de connexion"], ans: 1 },
+                { q: "Quel protocole de transport est privilégié pour la Voix sur IP ou le streaming vidéo ?", opts: ["TCP", "UDP", "FTP", "SSH"], ans: 1 },
+                { q: "Que reçoit une application si une erreur corrompt un datagramme UDP dans le réseau ?", opts: ["Le datagramme corrigé", "Rien (le datagramme est jeté silencieusement)", "Une demande de retransmission", "Le datagramme avec un avertissement"], ans: 1 },
+                { q: "Comment nomme-t-on les blocs d'informations découpés par la couche transport ?", opts: ["Trames", "Paquets", "Segments ou Datagrammes", "Bits"], ans: 2 },
+                { q: "Au niveau d'un serveur, à quoi sert le numéro de port ?", opts: ["Distinguer TCP de UDP", "Permettre à plusieurs clients de se connecter au même service", "Chiffrer la connexion", "Augmenter la bande passante"], ans: 1 },
+                { q: "Lequel de ces champs n'existe PAS dans l'en-tête minimaliste d'UDP ?", opts: ["Port Source", "Numéro de Séquence", "Port Destination", "Somme de contrôle"], ans: 1 }
+            ],
+            2: [
+                { q: "Que signifie l'acronyme HTTP ?", opts: ["HyperText Transfer Protocol", "Hyper Transfer Text Program", "Host To Transport Protocol", "HyperText Transmission Port"], ans: 0 },
+                { q: "Sur quel port le service HTTPS (chiffré) écoute-t-il par défaut ?", opts: ["80", "22", "443", "53"], ans: 2 },
+                { q: "Quel est le modèle de fonctionnement de HTTP ?", opts: ["Pair-à-pair (P2P)", "Client-Serveur", "Anneau à jeton", "Diffusion (Broadcast)"], ans: 1 },
+                { q: "Quelle méthode HTTP est utilisée pour demander le chargement d'une page (ressource) ?", opts: ["POST", "PUT", "GET", "DELETE"], ans: 2 },
+                { q: "Quelle méthode HTTP est généralement utilisée pour envoyer les données d'un formulaire ?", opts: ["GET", "POST", "UPDATE", "SEND"], ans: 1 },
+                { q: "Quel code de réponse HTTP indique un succès (OK) ?", opts: ["404", "500", "200", "403"], ans: 2 },
+                { q: "Quel code d'erreur indique que la page ou ressource n'existe pas ?", opts: ["200", "404", "503", "301"], ans: 1 },
+                { q: "Que fait le serveur lorsqu'il reçoit une requête HTTP bien formulée sur un port ouvert ?", opts: ["Il renvoie le contenu demandé avec un 'Content-Type'", "Il ferme la connexion TCP immédiatement", "Il demande une adresse IP", "Il chiffre la requête en SSH"], ans: 0 },
+                { q: "Un client HTTP (le navigateur) réserve son port de communication :", opts: ["De manière statique (toujours le 80)", "Au moment de l'installation de l'OS", "De manière dynamique (port éphémère) lors de la requête", "Le client n'a pas besoin de port"], ans: 2 },
+                { q: "Quelle méthode HTTP est spécifiquement utilisée pour supprimer une ressource ?", opts: ["ERASE", "DELETE", "REMOVE", "DROP"], ans: 1 }
+            ],
+            3: [
+                { q: "Quel est le rôle principal du service DHCP ?", opts: ["Traduire les noms de domaine", "Gérer les e-mails", "L'allocation dynamique d'adresses IP et configurations", "Sécuriser le réseau local"], ans: 2 },
+                { q: "Quels ports UDP le protocole DHCP utilise-t-il ?", opts: ["20 et 21", "67 et 68", "80 et 443", "53 et 54"], ans: 1 },
+                { q: "Que signifie le processus D.O.R.A en DHCP ?", opts: ["Data, Order, Request, Ack", "Discover, Offer, Request, Acknowledge", "Dynamic, Open, Route, Address", "Domain, Origin, Range, Assign"], ans: 1 },
+                { q: "Quelle est l'adresse IP source utilisée par un client lors de sa toute première requête DHCPDISCOVER ?", opts: ["127.0.0.1", "L'adresse IP de la passerelle", "0.0.0.0", "255.255.255.255"], ans: 2 },
+                { q: "Comment le client envoie-t-il son message DHCPDISCOVER s'il ne connaît pas le serveur ?", opts: ["Par un tunnel SSH", "En diffusion (Broadcast) sur 255.255.255.255", "En l'envoyant au routeur par défaut", "Via une résolution DNS"], ans: 1 },
+                { q: "Que contient le message DHCPOFFER ?", opts: ["Un refus de connexion", "La libération du bail IP", "Une proposition d'adresse IP valide par le serveur", "La requête d'un autre client"], ans: 2 },
+                { q: "Si le réseau possède 2 serveurs DHCP, combien de configurations le client accepte-t-il ?", opts: ["Les deux", "Une seule", "Aucune", "Il fait la moyenne des deux"], ans: 1 },
+                { q: "Que fait le client via le message DHCPREQUEST lors d'un DORA ?", opts: ["Il demande qui est le serveur", "Il avertit qu'il accepte une offre spécifique et décline les autres", "Il libère son IP", "Il demande l'heure au serveur"], ans: 1 },
+                { q: "Que se passe-t-il à la moitié (T/2) de la durée de vie du bail IP ?", opts: ["Le client perd son adresse", "Le serveur change l'IP du client", "Le client tente de renouveler son bail auprès du serveur", "Le client redémarre"], ans: 2 },
+                { q: "Quel message est envoyé par le client pour rendre (libérer) explicitement son adresse IP ?", opts: ["DHCPNAK", "DHCPDECLINE", "DHCPRELEASE", "DHCPDISCOVER"], ans: 2 }
+            ],
+            4: [
+                { q: "Que signifie l'acronyme SSH ?", opts: ["System Security Host", "Secure Shell", "Secure Socket Hub", "System Shield"], ans: 1 },
+                { q: "Sur quel port par défaut le service SSH écoute-t-il ?", opts: ["21", "80", "22", "23"], ans: 2 },
+                { q: "Quels anciens outils non sécurisés le protocole SSH est-il venu remplacer ?", opts: ["HTTPS et SFTP", "telnet et rsh", "DHCP et DNS", "TCP et UDP"], ans: 1 },
+                { q: "Quelle cryptographie SSH utilise-t-il au tout début pour échanger la clé secrète ?", opts: ["La cryptographie symétrique", "La cryptographie asymétrique (ex: clés publique/privée)", "Le hachage MD5", "Aucune"], ans: 1 },
+                { q: "Pourquoi ne pas utiliser la cryptographie asymétrique pour tout le transfert de données ?", opts: ["Car elle demande des calculs mathématiques trop complexes et lents", "Car elle n'est pas assez sécurisée", "Car elle nécessite un câble spécial", "Car elle consomme trop de bande passante réseau"], ans: 0 },
+                { q: "À quoi sert l'algorithme de Diffie-Hellman en SSH ?", opts: ["À compresser les données", "À authentifier l'utilisateur avec un mot de passe", "À générer une clé secrète partagée sans jamais l'envoyer en clair sur le réseau", "À fermer la connexion TCP"], ans: 2 },
+                { q: "Qu'est-ce que le Tunneling SSH ?", opts: ["Une méthode pour cacher les câbles physiques", "Une technique pour faire passer (rediriger) un autre protocole de manière chiffrée dans la session SSH", "Un outil de diagnostic réseau", "La suppression de la cryptographie symétrique"], ans: 1 },
+                { q: "Lequel de ces logiciels est un client SSH populaire sous Windows ?", opts: ["FileZilla", "PuTTY", "Wireshark", "Apache"], ans: 1 },
+                { q: "Quelle commande associée à SSH permet de transférer des fichiers de façon sécurisée ?", opts: ["scp (Secure Copy Protocol)", "ftp", "copy", "mv"], ans: 0 },
+                { q: "Lors de la cryptographie asymétrique (ex: Pam et Jim), par quelle clé un message chiffré avec la clé publique de Pam peut-il être déchiffré ?", opts: ["La clé publique de Jim", "La clé privée de Jim", "La clé privée de Pam", "N'importe quelle clé publique"], ans: 2 }
+            ],
+            5: [
+                { q: "Quel est le rôle du Domain Name System (DNS) ?", opts: ["Chiffrer le réseau", "Attribuer des adresses IP dynamiques", "Associer un nom 'humain' (logique) à une adresse IP", "Remplacer le protocole TCP"], ans: 2 },
+                { q: "Avant l'invention du DNS, comment les noms étaient-ils traduits ?", opts: ["Via une recherche Google", "Grâce à un fichier local (ex: /etc/hosts en UNIX)", "Ce n'était pas possible", "Via le protocole DHCP"], ans: 1 },
+                { q: "Combien de serveurs DNS 'Racine' existe-t-il dans le monde ?", opts: ["1", "13", "256", "Des millions"], ans: 1 },
+                { q: "Qu'est-ce qu'un TLD (Top Level Domain) ?", opts: ["Le serveur racine", "Le nom de la machine cible", "L'extension de premier niveau (ex: .com, .fr, .net)", "L'adresse IP finale"], ans: 2 },
+                { q: "Dans le mode de recherche DNS 'Itératif', qui fait le travail de contacter tous les serveurs hiérarchiques ?", opts: ["Le serveur racine", "Le serveur local (qui interroge successivement la racine, puis le TLD, etc.)", "Le serveur d'autorité", "Le routeur de la box internet"], ans: 1 },
+                { q: "Que se passe-t-il dans le mode de recherche DNS 'Récursif' ?", opts: ["Chaque serveur visité prend l'initiative d'interroger le serveur suivant à la place du demandeur", "La requête est annulée si non trouvée localement", "Le client doit interroger tous les serveurs manuellement", "La requête boucle à l'infini"], ans: 0 },
+                { q: "Le DNS permet-il la répartition de charge (Load Balancing) ?", opts: ["Non", "Oui, un nom de domaine peut renvoyer plusieurs adresses IP différentes", "Uniquement sur les TLD .com", "Seulement si TCP est désactivé"], ans: 1 },
+                { q: "Qu'est-ce qu'une 'Zone' DNS ?", opts: ["Une zone géographique interdite", "Un synonyme strict de Domaine", "Une partie de l'espace de noms DNS gérée par un serveur spécifique (enregistrements A, MX...)", "Le fichier /etc/hosts"], ans: 2 },
+                { q: "Pour créer le sous-domaine 'etu.uca.fr', de qui a-t-on besoin de l'autorisation ?", opts: ["De l'ICANN", "De l'organisme gérant le domaine père ('uca.fr')", "Du serveur racine", "De l'hébergeur web"], ans: 1 },
+                { q: "Sur quel port le service DNS écoute-t-il généralement (en UDP/TCP) ?", opts: ["80", "22", "67", "53"], ans: 3 }
+            ]
+        };
+
+        // --- STATE MANAGEMENT ---
+        const totalModules = 5;
+        let globalXP = 0;
+        const maxGlobalXP = 600; // Total possible XP
+        const modulesStatus = {1: false, 2: false, 3: false, 4: false, 5: false}; // Tracking passed modules
+
+        // --- CORE FUNCTIONS ---
+        function addXP(amount) {
+            globalXP += amount;
+            if (globalXP > maxGlobalXP) globalXP = maxGlobalXP;
+            document.getElementById('xp-counter').innerText = globalXP;
+            document.getElementById('xp-fill').style.width = `${(globalXP / maxGlobalXP) * 100}%`;
+        }
+
+        function checkFinalUnlock() {
+            // Check if all 5 modules are validated (true)
+            const allPassed = Object.values(modulesStatus).every(status => status === true);
+            if (allPassed) {
+                const finalBtn = document.getElementById('nav-mod-final');
+                finalBtn.classList.remove('locked');
+                finalBtn.innerHTML = `Examen Final <span>🔓</span>`;
+            }
+        }
+
+        // --- QUIZ GENERATION & LOGIC ---
+        let currentModuleSelections = {}; // Store selections per module { modId: [ans1, ans2...] }
+
+        function renderModuleQuiz(modId) {
+            const container = document.getElementById(`quiz-container-${modId}`);
+            if(!container) return;
+
+            let html = `<h3>Validation du module ${modId} (10 questions)</h3>`;
+            html += `<p style="font-size:0.9rem; color:var(--text-muted);">Obtenez au moins 7/10 pour valider ce chapitre et débloquer l'examen final.</p>`;
+            
+            currentModuleSelections[modId] = new Array(10).fill(null);
+
+            quizData[modId].forEach((qObj, index) => {
+                html += `<div class="question-block" id="m${modId}-q${index}">`;
+                html += `<div class="question-text">${index + 1}. ${qObj.q}</div>`;
+                html += `<div class="options-grid">`;
+                qObj.opts.forEach((opt, optIndex) => {
+                    html += `<button class="opt-btn" onclick="selectOption(${modId}, ${index}, ${optIndex}, this)">${opt}</button>`;
+                });
+                html += `</div></div>`;
+            });
+
+            html += `<button class="action-btn" id="btn-submit-${modId}" onclick="submitModuleQuiz(${modId})" style="width:100%;">Valider mes réponses</button>`;
+            html += `<div id="res-${modId}" class="quiz-result"></div>`;
+
+            container.innerHTML = html;
+        }
+
+        function selectOption(modId, qIndex, optIndex, btnElement) {
+            if (document.getElementById(`btn-submit-${modId}`).disabled) return;
+
+            currentModuleSelections[modId][qIndex] = optIndex;
+            
+            const siblings = btnElement.parentElement.children;
+            for(let b of siblings) b.classList.remove('selected');
+            btnElement.classList.add('selected');
+        }
+
+        function submitModuleQuiz(modId) {
+            const selections = currentModuleSelections[modId];
+            if (selections.includes(null)) {
+                alert("Veuillez répondre à toutes les questions avant de valider.");
+                return;
+            }
+
+            let score = 0;
+            const data = quizData[modId];
+
+            selections.forEach((sel, index) => {
+                const correctIdx = data[index].ans;
+                const block = document.getElementById(`m${modId}-q${index}`);
+                const buttons = block.querySelectorAll('.opt-btn');
+                
+                buttons.forEach(b => { b.disabled = true; b.classList.remove('selected'); });
+
+                if (sel === correctIdx) {
+                    score++;
+                    buttons[sel].classList.add('correct');
+                } else {
+                    buttons[sel].classList.add('wrong');
+                    buttons[correctIdx].classList.add('correct');
+                }
+            });
+
+            document.getElementById(`btn-submit-${modId}`).disabled = true;
+
+            const resDiv = document.getElementById(`res-${modId}`);
+            resDiv.style.display = "block";
+            
+            if (score >= 7) {
+                resDiv.className = "quiz-result pass";
+                resDiv.innerHTML = `<strong>Succès : ${score}/10 !</strong><br>XP gagnée : +${score * 10}<br>Chapitre validé.`;
+                addXP(score * 10);
+                
+                // Mark module as validated and update UI
+                modulesStatus[modId] = true;
+                const navBtn = document.getElementById(`nav-mod-${modId}`);
+                navBtn.querySelector('.status-icon').innerText = '✅';
+                
+                checkFinalUnlock();
+            } else {
+                resDiv.className = "quiz-result fail";
+                resDiv.innerHTML = `<strong>Échec : ${score}/10</strong><br>Vous avez besoin de 7/10 minimum. Lisez bien le cours et recommencez.`;
+                resDiv.innerHTML += `<br><button class="action-btn" style="margin-top:15px;" onclick="renderModuleQuiz(${modId})">Recommencer le QCM</button>`;
+            }
+        }
+
+        // --- FINAL EXAM LOGIC ---
+        let finalExamQuestions = [];
+        let finalSelections = [];
+
+        function startFinalExam() {
+            let allQuestions = [];
+            for(let i=1; i<=5; i++) {
+                allQuestions = allQuestions.concat(quizData[i]);
+            }
+            
+            allQuestions.sort(() => 0.5 - Math.random());
+            finalExamQuestions = allQuestions.slice(0, 15);
+            finalSelections = new Array(15).fill(null);
+
+            const wrapper = document.getElementById('final-exam-wrapper');
+            wrapper.style.display = "block";
+            
+            let html = ``;
+            finalExamQuestions.forEach((qObj, index) => {
+                html += `<div class="question-block" id="final-q${index}">`;
+                html += `<div class="question-text">Q${index + 1}. ${qObj.q}</div>`;
+                html += `<div class="options-grid">`;
+                qObj.opts.forEach((opt, optIndex) => {
+                    html += `<button class="opt-btn" onclick="selectFinalOption(${index}, ${optIndex}, this)">${opt}</button>`;
+                });
+                html += `</div></div>`;
+            });
+
+            html += `<button class="action-btn" id="btn-submit-final" onclick="submitFinalExam()" style="width:100%; background:var(--accent-purple); color:#fff;">Valider l'Examen Final</button>`;
+            html += `<div id="res-final" class="quiz-result"></div>`;
+
+            wrapper.innerHTML = html;
+            document.querySelector('#quiz-container-final > button').style.display = 'none';
+        }
+
+        function selectFinalOption(qIndex, optIndex, btnElement) {
+            if (document.getElementById(`btn-submit-final`).disabled) return;
+            finalSelections[qIndex] = optIndex;
+            const siblings = btnElement.parentElement.children;
+            for(let b of siblings) b.classList.remove('selected');
+            btnElement.classList.add('selected');
+        }
+
+        function submitFinalExam() {
+            if (finalSelections.includes(null)) {
+                alert("Veuillez répondre aux 15 questions de l'examen final.");
+                return;
+            }
+
+            let score = 0;
+            finalSelections.forEach((sel, index) => {
+                const correctIdx = finalExamQuestions[index].ans;
+                const block = document.getElementById(`final-q${index}`);
+                const buttons = block.querySelectorAll('.opt-btn');
+                
+                buttons.forEach(b => { b.disabled = true; b.classList.remove('selected'); });
+
+                if (sel === correctIdx) {
+                    score++;
+                    buttons[sel].classList.add('correct');
+                } else {
+                    buttons[sel].classList.add('wrong');
+                    buttons[correctIdx].classList.add('correct');
+                }
+            });
+
+            document.getElementById(`btn-submit-final`).disabled = true;
+            const resDiv = document.getElementById(`res-final`);
+            resDiv.style.display = "block";
+
+            if (score >= 12) {
+                resDiv.className = "quiz-result pass";
+                resDiv.innerHTML = `<h2>🎓 FÉLICITATIONS !</h2><br><strong>Score : ${score}/15</strong><br>Vous avez brillamment validé la matière "Bases des Services Réseaux". Administrateur certifié !`;
+                addXP(100);
+            } else {
+                resDiv.className = "quiz-result fail";
+                resDiv.innerHTML = `<strong>Échec : ${score}/15</strong><br>La validation requiert au moins 12 bonnes réponses. Révisez vos modules !`;
+                resDiv.innerHTML += `<br><button class="action-btn" style="margin-top:15px;" onclick="startFinalExam()">Retenter l'examen</button>`;
+            }
+        }
+
+        // --- EVENT LISTENERS & INIT ---
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                if(btn.classList.contains('locked')) return;
+
+                document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                const targetId = btn.getAttribute('data-target');
+                document.querySelectorAll('.module').forEach(mod => {
+                    mod.classList.remove('active');
+                    if(mod.id === targetId) mod.classList.add('active');
+                });
+            });
+        });
+
+        // Initialize all module quizzes on load
+        for(let i=1; i<=5; i++) { renderModuleQuiz(i); }
+
+    </script>
+</body>
+</html>
