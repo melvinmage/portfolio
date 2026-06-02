@@ -763,14 +763,17 @@ input[name="type-competence"] {
 }
 
 .carte-projet {
-    background-color: var(--fond-carte); 
-    border: var(--bordure-verre);
-    border-radius: 20px; 
-    overflow: hidden; 
+    background-color: var(--fond-boite);
+    border-radius: 12px;
+    overflow: hidden;
     text-decoration: none;
-    transition: transform 0.3s, box-shadow 0.3s;
-    display: flex; 
-    flex-direction: column; 
+    color: inherit;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    
+    /* ---- AJOUTS POUR FORCER LA HAUTEUR UNIFORME ---- */
+    display: flex;
+    flex-direction: column;
     height: 100%;
 }
 
@@ -786,6 +789,22 @@ input[name="type-competence"] {
     background-position: center; 
     position: relative; 
     background-color: #1e293b; 
+}
+
+.badge-status {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: #7000ff;
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: bold;
+    padding: 4px 10px;
+    border-radius: 20px;
+    z-index: 2;
+    text-transform: uppercase;
+    box-shadow: 0 2px 8px rgba(112, 0, 255, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .overlay-projet {
@@ -817,11 +836,12 @@ input[name="type-competence"] {
     transform: scale(1.1); 
 }
 
-.content-projet { 
-    padding: 25px; 
-    display: flex; 
-    flex-direction: column; 
-    flex-grow: 1; 
+.content-projet {
+    padding: 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .content-projet h3 { 
@@ -1155,6 +1175,59 @@ footer {
     .liens-nav a {
         font-size: 1.1rem; /* Texte légèrement plus gros sur mobile */
         font-weight: 600;
+    }
+}
+
+/* --- CARROUSEL INFINI AUTOMATIQUE --- */
+/* --- CARROUSEL INFINI AUTOMATIQUE AVEC FONDU --- */
+.zone-slider-infini {
+    width: 100%;
+    overflow: hidden; /* Masque tout ce qui dépasse de l'écran */
+    position: relative;
+    padding: 20px 0;
+
+    /* ---- EFFET DE DEGRADÉ SUR LES BORDS GAUCHE & DROITE ---- */
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%);
+}
+
+.track-projets {
+    display: flex;
+    gap: 20px;
+    width: max-content; /* Force la ligne à s'étendre sur toute la largeur des cartes */
+    animation: defilementInfini 25s linear infinite; /* Ajuste '25s' pour accélérer ou ralentir */
+}
+
+/* Fixe une largeur identique pour toutes les cartes dans le défilement */
+.track-projets .carte-projet {
+    width: 320px; 
+    flex-shrink: 0;
+    display: flex !important; /* Force le comportement flex horizontal */
+    flex-direction: column;
+    height: auto; /* Laisse le parent flex dicter la hauteur maximale */
+}
+
+/* Effet UX : Met en pause le défilement quand l'utilisateur survole avec sa souris */
+.zone-slider-infini:hover .track-projets {
+    animation-play-state: paused;
+}
+
+/* L'élément clé : On décale la ligne de la moitié de sa largeur totale (fin du bloc 1), 
+puis l'animation se réinitialise instantanément à 0% de manière invisible */
+@keyframes defilementInfini {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        /* On recule de 4 cartes + les 4 gaps associés */
+        transform: translateX(calc(-50% - 10px)); 
+    }
+}
+
+/* Optimisation pour les smartphones (tactile) */
+@media (max-width: 600px) {
+    .track-projets {
+        animation-duration: 15s; /* Un peu plus rapide sur petit écran car moins de distance */
     }
 }
 
