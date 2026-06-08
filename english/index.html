@@ -24,6 +24,7 @@
     --orange: #ff8c42;
     --teal: #2adab1;
     --glow: rgba(79,140,255,0.15);
+    --glow2: rgba(123,95,255,0.1);
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -69,21 +70,88 @@
     transition: transform 0.3s;
   }
 
-  .logo { padding: 24px 20px 20px; border-bottom: 1px solid var(--border); }
-  .logo-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 16px; color: var(--text); letter-spacing: -0.3px; }
+  .logo {
+    padding: 24px 20px 20px;
+    border-bottom: 1px solid var(--border);
+  }
+  .logo-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 16px;
+    color: var(--text);
+    letter-spacing: -0.3px;
+  }
   .logo-title span { color: var(--accent); }
-  .logo-sub { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--text3); margin-top: 3px; text-transform: uppercase; letter-spacing: 1.5px; }
+  .logo-sub {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: var(--text3);
+    margin-top: 3px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+  }
 
   .nav { flex: 1; padding: 16px 0; }
-  .nav-section { font-family: 'JetBrains Mono', monospace; font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text3); padding: 12px 20px 6px; }
-  .nav-item { display: flex; align-items: center; gap: 10px; padding: 9px 20px; cursor: pointer; transition: all 0.15s; border-left: 2px solid transparent; color: var(--text2); font-size: 13.5px; }
+  .nav-section {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--text3);
+    padding: 12px 20px 6px;
+  }
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 20px;
+    cursor: pointer;
+    transition: all 0.15s;
+    border-left: 2px solid transparent;
+    color: var(--text2);
+    font-size: 13.5px;
+  }
   .nav-item:hover { background: var(--bg3); color: var(--text); }
-  .nav-item.active { background: var(--bg3); color: var(--accent); border-left-color: var(--accent); }
+  .nav-item.active {
+    background: var(--bg3);
+    color: var(--accent);
+    border-left-color: var(--accent);
+  }
   .nav-item .icon { font-size: 14px; width: 18px; text-align: center; }
-  .nav-badge { margin-left: auto; background: var(--accent); color: #fff; font-size: 9px; font-family: 'JetBrains Mono', monospace; padding: 1px 6px; border-radius: 10px; font-weight: 700; }
+  .nav-badge {
+    margin-left: auto;
+    background: var(--accent);
+    color: #fff;
+    font-size: 9px;
+    font-family: 'JetBrains Mono', monospace;
+    padding: 1px 6px;
+    border-radius: 10px;
+    font-weight: 700;
+  }
 
-  .panic-btn { margin: 16px; padding: 11px 16px; background: linear-gradient(135deg, #ff1744, #ff4f6e); border: none; border-radius: 8px; color: #fff; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 12px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; transition: all 0.2s; position: relative; overflow: hidden; }
-  .panic-btn::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent); }
+  .panic-btn {
+    margin: 16px;
+    padding: 11px 16px;
+    background: linear-gradient(135deg, #ff1744, #ff4f6e);
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .panic-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent);
+  }
   .panic-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(255,79,110,0.4); }
   .panic-btn .p-icon { font-size: 14px; margin-right: 6px; }
 
@@ -102,7 +170,8 @@
   .card-title .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
 
   .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-  
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+
   .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
   .stat-card { background: var(--bg3); border: 1px solid var(--border); border-radius: 10px; padding: 18px 20px; position: relative; overflow: hidden; }
   .stat-card::after { content: ''; position: absolute; top: 0; right: 0; width: 60px; height: 60px; border-radius: 50%; background: var(--glow); transform: translate(20px, -20px); }
@@ -114,6 +183,7 @@
   .stat-value.red { color: var(--red); }
   .stat-sub { font-size: 11px; color: var(--text3); margin-top: 4px; }
 
+  .timeline-container { position: relative; padding: 20px 0; }
   .timeline-axis { height: 3px; background: linear-gradient(90deg, var(--bg4), var(--border2), var(--bg4)); border-radius: 2px; position: relative; margin: 40px 16px; }
   .tl-label-row { display: flex; justify-content: space-between; padding: 0 16px; margin-bottom: 8px; }
   .tl-label { font-family: 'JetBrains Mono', monospace; font-size: 9px; text-transform: uppercase; letter-spacing: 1px; color: var(--text3); }
@@ -144,12 +214,21 @@
   .prep-card.on::before { background: var(--green); }
   .prep-card.in::before { background: var(--accent2); }
   .prep-card:hover { transform: translateY(-2px); border-color: var(--border2); }
+  .prep-card.active.at { border-color: var(--accent); background: rgba(79,140,255,0.05); }
+  .prep-card.active.on { border-color: var(--green); background: rgba(34,216,122,0.05); }
+  .prep-card.active.in { border-color: var(--accent2); background: rgba(123,95,255,0.05); }
   .prep-symbol { width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; font-family: 'Syne', sans-serif; font-weight: 800; font-size: 22px; }
   .prep-card.at .prep-symbol { background: rgba(79,140,255,0.1); color: var(--accent); }
   .prep-card.on .prep-symbol { background: rgba(34,216,122,0.1); color: var(--green); }
   .prep-card.in .prep-symbol { background: rgba(123,95,255,0.1); color: var(--accent2); }
   .prep-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px; color: var(--text); margin-bottom: 4px; }
   .prep-subtitle { font-size: 11px; color: var(--text3); margin-bottom: 12px; }
+  .prep-examples { display: flex; flex-direction: column; gap: 4px; }
+  .prep-ex { background: var(--bg2); border-radius: 6px; padding: 5px 10px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text2); text-align: left; }
+  .prep-ex strong { color: inherit; }
+  .prep-card.at .prep-ex strong { color: var(--accent); }
+  .prep-card.on .prep-ex strong { color: var(--green); }
+  .prep-card.in .prep-ex strong { color: var(--accent2); }
 
   .fiche { background: var(--bg3); border: 1px solid var(--border); border-radius: 10px; margin-bottom: 10px; overflow: hidden; transition: border-color 0.2s; }
   .fiche:hover { border-color: var(--border2); }
@@ -168,19 +247,7 @@
   .fiche-body .code-ex { font-family: 'JetBrains Mono', monospace; font-size: 12px; background: var(--bg2); border: 1px solid var(--border); border-radius: 6px; padding: 10px 14px; margin: 10px 0; }
   .fiche-body .code-ex .correct { color: var(--green); }
   .fiche-body .code-ex .wrong { color: var(--red); text-decoration: line-through; }
-
-  /* NOVELTY: TABLE STRUCTURE FOR VERBS */
-  .verb-search-box { width: 100%; padding: 12px 16px; background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 14px; margin-bottom: 20px; transition: border-color 0.15s; }
-  .verb-search-box:focus { border-color: var(--accent); outline: none; }
-  .verb-table-wrapper { width: 100%; overflow-x: auto; background: var(--bg3); border: 1px solid var(--border); border-radius: 12px; }
-  .verb-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 13.5px; }
-  .verb-table th { background: var(--bg2); padding: 12px 16px; font-family: 'JetBrains Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--text3); border-bottom: 1px solid var(--border); }
-  .verb-table td { padding: 12px 16px; border-bottom: 1px solid var(--border); color: var(--text2); font-family: 'JetBrains Mono', monospace; }
-  .verb-table tr:hover td { background: var(--bg4); color: var(--text); }
-  .verb-table .v-base { color: var(--text); font-weight: 600; }
-  .verb-table .v-pre { color: var(--orange); }
-  .verb-table .v-pp { color: var(--accent); }
-  .verb-table .v-trans { font-family: 'DM Sans', sans-serif; color: var(--text2); }
+  .fiche-body .code-ex .highlight { color: var(--yellow); }
 
   .qcm-container { max-width: 720px; }
   .qcm-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
@@ -206,10 +273,15 @@
   .q-options { display: flex; flex-direction: column; gap: 10px; }
   .q-option { padding: 13px 18px; border-radius: 9px; border: 1px solid var(--border); background: var(--bg4); cursor: pointer; transition: all 0.15s; display: flex; align-items: flex-start; gap: 12px; font-size: 13.5px; color: var(--text2); position: relative; overflow: hidden; }
   .q-option:hover { border-color: var(--border2); color: var(--text); background: var(--bg3); }
+  .q-option.selected { border-color: var(--accent); color: var(--text); background: rgba(79,140,255,0.05); }
   .q-option.correct { border-color: var(--green); color: var(--green); background: rgba(34,216,122,0.05); }
   .q-option.wrong { border-color: var(--red); color: var(--red); background: rgba(255,79,110,0.05); }
   .q-option.disabled { pointer-events: none; }
-  .opt-letter { width: 22px; height: 22px; border-radius: 50%; border: 1px solid var(--border2); display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text3); flex-shrink: 0; }
+  .opt-letter { width: 22px; height: 22px; border-radius: 50%; border: 1px solid var(--border2); display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text3); flex-shrink: 0; transition: all 0.15s; }
+  .q-option:hover .opt-letter { border-color: var(--text2); color: var(--text2); }
+  .q-option.selected .opt-letter { border-color: var(--accent); color: var(--accent); }
+  .q-option.correct .opt-letter { border-color: var(--green); background: var(--green); color: #fff; }
+  .q-option.wrong .opt-letter { border-color: var(--red); background: var(--red); color: #fff; }
 
   .feedback-panel { display: none; background: var(--bg4); border-radius: 12px; border: 1px solid var(--border); padding: 20px; margin-top: 16px; animation: slideUp 0.3s ease; }
   .feedback-panel.show { display: block; }
@@ -226,10 +298,11 @@
   .fb-section .clue { color: var(--yellow); }
   .fb-section .counter { color: var(--text3); font-style: italic; }
 
-  .next-btn { display: block; width: 100%; margin-top: 16px; padding: 13px; background: var(--accent); border: none; border-radius: 9px; color: #fff; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 14px; cursor: pointer; transition: all 0.2s; }
+  .next-btn { display: block; width: 100%; margin-top: 16px; padding: 13px; background: var(--accent); border: none; border-radius: 9px; color: #fff; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 14px; cursor: pointer; transition: all 0.2s; letter-spacing: 0.3px; }
   .next-btn:hover { background: #3a7ae8; transform: translateY(-1px); }
 
-  .radar-skills { display: flex; flex-direction: column; gap: 10px; }
+  .radar-container { display: flex; align-items: center; gap: 32px; }
+  .radar-skills { flex: 1; display: flex; flex-direction: column; gap: 10px; }
   .skill-row { display: flex; align-items: center; gap: 12px; }
   .skill-name { font-size: 12px; color: var(--text2); width: 180px; flex-shrink: 0; }
   .skill-bar-wrap { flex: 1; height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
@@ -252,7 +325,8 @@
   .panic-overlay.show { display: flex; flex-direction: column; }
   .panic-header { background: linear-gradient(135deg, #1a0005, #0a0b0e); border-bottom: 1px solid rgba(255,79,110,0.3); padding: 20px 40px; display: flex; align-items: center; justify-content: space-between; }
   .panic-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20px; color: var(--red); display: flex; align-items: center; gap: 10px; }
-  .panic-close { background: var(--bg3); border: 1px solid var(--border); border-radius: 8px; padding: 8px 14px; color: var(--text2); font-size: 12px; cursor: pointer; font-family: 'JetBrains Mono', monospace; }
+  .panic-close { background: var(--bg3); border: 1px solid var(--border); border-radius: 8px; padding: 8px 14px; color: var(--text2); font-size: 12px; cursor: pointer; font-family: 'JetBrains Mono', monospace; transition: all 0.15s; }
+  .panic-close:hover { border-color: var(--red); color: var(--red); }
   .panic-content { padding: 32px 40px; max-width: 900px; margin: 0 auto; width: 100%; }
   .rules-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 32px; }
   .rule-card { background: var(--bg3); border: 1px solid var(--border); border-radius: 10px; padding: 16px; border-left: 3px solid var(--red); }
@@ -272,6 +346,7 @@
   .micro-opt.disabled { pointer-events: none; }
   .micro-counter { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text3); margin-bottom: 16px; }
   .micro-next { margin-top: 12px; padding: 10px 20px; background: var(--red); border: none; border-radius: 8px; color: #fff; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px; cursor: pointer; display: none; }
+  .micro-next.show { display: block; }
 
   @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
   @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
@@ -283,9 +358,12 @@
     .sidebar { transform: translateX(-240px); }
     .main { margin-left: 0; }
     .stats-row { grid-template-columns: repeat(2, 1fr); }
-    .grid-2 { grid-template-columns: 1fr; }
+    .fb-sections { grid-template-columns: 1fr; }
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
     .prep-map { grid-template-columns: 1fr; }
+    .radar-container { flex-direction: column; }
     .rules-grid { grid-template-columns: 1fr; }
+    .tl-detail-grid { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -295,7 +373,7 @@
   <nav class="sidebar">
     <div class="logo">
       <div class="logo-title"><span>English</span></div>
-      <div class="logo-sub">Business Grammar System v2.6</div>
+      <div class="logo-sub">Business Grammar System v2.5</div>
     </div>
     <div class="nav">
       <div class="nav-section">Vue d'ensemble</div>
@@ -312,12 +390,10 @@
       <div class="nav-item" onclick="showPage('fiches')">
         <span class="icon">⊞</span> Fiches Piège
       </div>
-      <div class="nav-item" onclick="showPage('verbs')">
-        <span class="icon">▲</span> Verbes Irréguliers <span class="nav-badge">100</span>
-      </div>
       <div class="nav-section">Entraînement</div>
       <div class="nav-item" onclick="showPage('qcm')">
         <span class="icon">◉</span> QCM Deep-Learning
+        <span class="nav-badge" id="badge-qcm-count">0</span>
       </div>
       <div class="nav-item" onclick="showPage('nylon')">
         <span class="icon">✈</span> Examen NyLon
@@ -378,6 +454,16 @@
             Analyse automatisée de vos faiblesses conceptuelles :<br><br>
             <div style="display:flex;flex-direction:column;gap:8px;" id="dashboard-risk-zone"></div>
           </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="dot" style="background:var(--teal)"></span> Actions de Répétition</div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;">
+          <button onclick="showPage('qcm')" style="padding:10px 18px;border-radius:8px;border:1px solid var(--accent);background:rgba(79,140,255,0.1);color:var(--accent);font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.15s;">◉ Démarrer QCM</button>
+          <button onclick="showPage('timeline')" style="padding:10px 18px;border-radius:8px;border:1px solid var(--border2);background:var(--bg4);color:var(--text2);font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.15s;">⟶ Ligne du Temps</button>
+          <button onclick="showPage('nylon')" style="padding:10px 18px;border-radius:8px;border:1px solid var(--border2);background:var(--bg4);color:var(--text2);font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.15s;">✈ Examen NyLon</button>
+          <button onclick="clearLocalStorageData()" style="padding:10px 18px;border-radius:8px;border:1px solid rgba(255,79,110,0.4);background:rgba(255,79,110,0.08);color:var(--red);font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.15s;margin-left:auto;">Reset Historique</button>
         </div>
       </div>
     </div>
@@ -464,30 +550,6 @@
         </div>
       </div>
       <div id="fiches-container"></div>
-    </div>
-
-    <div id="page-verbs" class="page">
-      <div class="page-header">
-        <div>
-          <div class="page-title">Les 100 Verbes <span>Irréguliers Communs</span></div>
-          <div class="page-desc">Indexation rapide avec focus sémantique Business & NyLon Travel.</div>
-        </div>
-      </div>
-      <input type="text" id="verb-search" class="verb-search-box" placeholder="Rechercher instantanément un verbe (base, prétérit ou traduction)..." oninput="filterVerbsTable()">
-      <div class="verb-table-wrapper">
-        <table class="verb-table">
-          <thead>
-            <tr>
-              <th>Infinitive (V1)</th>
-              <th>Simple Past (V2)</th>
-              <th>Past Participle (V3)</th>
-              <th>Traduction (Business context)</th>
-            </tr>
-          </thead>
-          <tbody id="verbs-table-body">
-            </tbody>
-        </table>
-      </div>
     </div>
 
     <div id="page-qcm" class="page">
@@ -585,142 +647,7 @@
 </div>
 
 <script>
-// ===================== DATA DICTIONARY: 100 VERBES IRRÉGULIERS =====================
-const VERBS_100_DATA = [
-  { v1: 'arise', v2: 'arose', v3: 'arisen', t: 'survenir / émerger (problème)' },
-  { v1: 'awake', v2: 'awoke', v3: 'awoken', t: 'se réveiller (décalage horaire)' },
-  { v1: 'be', v2: 'was / were', v3: 'been', t: 'être' },
-  { v1: 'bear', v2: 'bore', v3: 'borne', t: 'supporter (les coûts / charges)' },
-  { v1: 'beat', v2: 'beat', v3: 'beaten', t: 'battre (la concurrence)' },
-  { v1: 'become', v2: 'became', v3: 'become', t: 'devenir' },
-  { v1: 'begin', v2: 'began', v3: 'began', t: 'commencer' },
-  { v1: 'bend', v2: 'bent', v3: 'bent', t: 'fléchir / plier' },
-  { v1: 'bet', v2: 'bet', v3: 'bet', t: 'parier (sur une stratégie)' },
-  { v1: 'bind', v2: 'bound', v3: 'bound', t: 'lier / engager (par contrat)' },
-  { v1: 'bite', v2: 'bit', v3: 'bitten', t: 'mordre' },
-  { v1: 'bleed', v2: 'bled', v3: 'bled', t: 'saigner / perdre de l\'argent' },
-  { v1: 'blow', v2: 'blew', v3: 'blown', t: 'souffler / exploser (budget)' },
-  { v1: 'break', v2: 'broke', v3: 'broken', t: 'casser / rompre (négociation)' },
-  { v1: 'bring', v2: 'brought', v3: 'brought', t: 'apporter (de la valeur)' },
-  { v1: 'build', v2: 'built', v3: 'built', t: 'construire (un partenariat)' },
-  { v1: 'burn', v2: 'burnt', v3: 'burnt', t: 'brûler (du cash)' },
-  { v1: 'burst', v2: 'burst', v3: 'burst', t: 'éclater (bulle financière)' },
-  { v1: 'buy', v2: 'bought', v3: 'bought', t: 'acheter / racheter (parts)' },
-  { v1: 'cast', v2: 'cast', v3: 'cast', t: 'projeter (des prévisions)' },
-  { v1: 'catch', v2: 'caught', v3: 'caught', t: 'attraper / rater (un vol)' },
-  { v1: 'choose', v2: 'chose', v3: 'chosen', t: 'choisir' },
-  { v1: 'cling', v2: 'clung', v3: 'clung', t: 's\'accrocher (à un projet)' },
-  { v1: 'come', v2: 'came', v3: 'come', t: 'venir' },
-  { v1: 'cost', v2: 'cost', v3: 'cost', t: 'coûter' },
-  { v1: 'creep', v2: 'crept', v3: 'crept', t: 'se glisser / ramper' },
-  { v1: 'cut', v2: 'cut', v3: 'cut', t: 'couper / réduire (coûts)' },
-  { v1: 'deal', v2: 'dealt', v3: 'dealt', t: 'négocier / traiter (deal)' },
-  { v1: 'dig', v2: 'dug', v3: 'dug', t: 'creuser / approfondir' },
-  { v1: 'do', v2: 'did', v3: 'done', t: 'faire' },
-  { v1: 'draw', v2: 'drew', v3: 'drawn', t: 'dessiner / concevoir (plan)' },
-  { v1: 'dream', v2: 'dreamt', v3: 'dreamt', t: 'rêver' },
-  { v1: 'drink', v2: 'drank', v3: 'drunk', t: 'boire' },
-  { v1: 'drive', v2: 'drove', v3: 'driven', t: 'conduire / piloter (croissance)' },
-  { v1: 'eat', v2: 'ate', v3: 'eaten', t: 'manger' },
-  { v1: 'fall', v2: 'fell', v3: 'fallen', t: 'chuter (les actions / cours)' },
-  { v1: 'feed', v2: 'fed', v3: 'fed', t: 'alimenter / nourrir' },
-  { v1: 'feel', v2: 'felt', v3: 'felt', t: 'se sentir / ressentir' },
-  { v1: 'fight', v2: 'fought', v3: 'fought', t: 'lutter contre (un rachat)' },
-  { v1: 'find', v2: 'found', v3: 'found', t: 'trouver (une solution)' },
-  { v1: 'flee', v2: 'fled', v3: 'fled', t: 'fuir (les investisseurs)' },
-  { v1: 'fly', v2: 'flew', v3: 'flown', t: 'voler / voyager en avion' },
-  { v1: 'forbid', v2: 'forbade', v3: 'forbidden', t: 'interdire' },
-  { v1: 'forecast', v2: 'forecast', v3: 'forecast', t: 'prévoir / budgétiser' },
-  { v1: 'foresee', v2: 'foresaw', v3: 'foreseen', t: 'anticiper (les risques)' },
-  { v1: 'forget', v2: 'forgot', v3: 'forgotten', t: 'oublier' },
-  { v1: 'forgive', v2: 'forgave', v3: 'forgiven', t: 'pardonner' },
-  { v1: 'freeze', v2: 'froze', v3: 'frozen', t: 'geler (les recrutements / avoirs)' },
-  { v1: 'get', v2: 'got', v3: 'got / gotten', t: 'obtenir / recevoir' },
-  { v1: 'give', v2: 'gave', v3: 'given', t: 'donner / accorder (rabais)' },
-  { v1: 'go', v2: 'went', v3: 'gone', t: 'aller' },
-  { v1: 'grow', v2: 'grew', v3: 'grown', t: 'croître / développer' },
-  { v1: 'hang', v2: 'hung', v3: 'hung', t: 'suspendre (des discussions)' },
-  { v1: 'have', v2: 'had', v3: 'had', t: 'avoir' },
-  { v1: 'hear', v2: 'heard', v3: 'heard', t: 'entendre / apprendre une info' },
-  { v1: 'hide', v2: 'hid', v3: 'hidden', t: 'cacher / dissimuler' },
-  { v1: 'hit', v2: 'hit', v3: 'hit', t: 'frapper / impacter (marché)' },
-  { v1: 'hold', v2: 'held', v3: 'held', t: 'tenir / organiser (réunion)' },
-  { v1: 'hurt', v2: 'hurt', v3: 'hurt', t: 'blesser / nuire à (la marque)' },
-  { v1: 'keep', v2: 'kept', v3: 'kept', t: 'garder / maintenir (objectifs)' },
-  { v1: 'know', v2: 'knew', v3: 'known', t: 'savoir / connaître' },
-  { v1: 'lay', v2: 'laid', v3: 'laid', t: 'poser / présenter (les bases)' },
-  { v1: 'lead', v2: 'led', v3: 'led', t: 'mener / diriger (équipe)' },
-  { v1: 'lean', v2: 'leant', v3: 'leant', t: 'pencher / s\'appuyer sur' },
-  { v1: 'leap', v2: 'leapt', v3: 'leapt', t: 'sauter / bondir' },
-  { v1: 'learn', v2: 'learnt', v3: 'learnt', t: 'apprendre' },
-  { v1: 'leave', v2: 'left', v3: 'left', t: 'quitter / partir (en voyage)' },
-  { v1: 'lend', v2: 'lent', v3: 'lent', t: 'prêter (fonds / capitaux)' },
-  { v1: 'let', v2: 'let', v3: 'let', t: 'laisser / autoriser' },
-  { v1: 'lie', v2: 'lay', v3: 'lain', t: 'être couché / situé' },
-  { v1: 'light', v2: 'lit', v3: 'lit', t: 'allumer / éclairer' },
-  { v1: 'lose', v2: 'lost', v3: 'lost', t: 'perdre (un client / contrat)' },
-  { v1: 'make', v2: 'made', v3: 'made', t: 'fabriquer / générer (profit)' },
-  { v1: 'mean', v2: 'meant', v3: 'meant', t: 'signifier / vouloir dire' },
-  { v1: 'meet', v2: 'met', v3: 'met', t: 'rencontrer / satisfaire (besoins)' },
-  { v1: 'misunderstand', v2: 'misunderstood', v3: 'misunderstood', t: 'mal comprendre' },
-  { v1: 'overcome', v2: 'overcame', v3: 'overcome', t: 'surmonter (la crise)' },
-  { v1: 'pay', v2: 'paid', v3: 'paid', t: 'payer / régler (facture)' },
-  { v1: 'put', v2: 'put', v3: 'put', t: 'mettre / placer' },
-  { v1: 'quit', v2: 'quit', v3: 'quit', t: 'démissionner / quitter un poste' },
-  { v1: 'read', v2: 'read', v3: 'read', t: 'lire (le rapport financier)' },
-  { v1: 'ride', v2: 'rode', v3: 'ridden', t: 'monter / traverser' },
-  { v1: 'ring', v2: 'rang', v3: 'rung', t: 'sonner / téléphoner' },
-  { v1: 'rise', v2: 'rose', v3: 'risen', t: 'augmenter (chiffre d\'affaires)' },
-  { v1: 'run', v2: 'ran', v3: 'run', t: 'courir / gérer (une filiale)' },
-  { v1: 'say', v2: 'said', v3: 'said', t: 'dire' },
-  { v1: 'see', v2: 'saw', v3: 'seen', t: 'voir' },
-  { v1: 'seek', v2: 'sought', v3: 'sought', t: 'chercher / solliciter (invest.)' },
-  { v1: 'sell', v2: 'sold', v3: 'sold', t: 'vendre' },
-  { v1: 'send', v2: 'sent', v3: 'sent', t: 'envoyer (un courriel pro)' },
-  { v1: 'set', v2: 'set', v3: 'set', t: 'fixer / paramétrer (tarifs)' },
-  { v1: 'shake', v2: 'shook', v3: 'shaken', t: 'secouer / ébranler (marché)' },
-  { v1: 'shine', v2: 'shone', v3: 'shone', t: 'briller' },
-  { v1: 'shoot', v2: 'shot', v3: 'shot', t: 'tirer / cibler' },
-  { v1: 'show', v2: 'showed', v3: 'shown', t: 'montrer / prouver' },
-  { v1: 'shut', v2: 'shut', v3: 'shut', t: 'fermer (les bureaux / usines)' },
-  { v1: 'sing', v2: 'sang', v3: 'sung', t: 'chanter' },
-  { v1: 'sink', v2: 'sank', v3: 'sunk', t: 'couler / s\'effondrer' },
-  { v1: 'sit', v2: 'sat', v3: 'sat', t: 'être assis' },
-  { v1: 'sleep', v2: 'slept', v3: 'slept', t: 'dormir' },
-  { v1: 'slide', v2: 'slid', v3: 'slid', t: 'glisser / baisser continuellement' },
-  { v1: 'speak', v2: 'spoke', v3: 'spoken', t: 'parler / s\'exprimer (conf.)' },
-  { v1: 'spend', v2: 'spent', v3: 'spent', t: 'dépenser (budget) / passer (temps)' },
-  { v1: 'spin', v2: 'spun', v3: 'spun', t: 'tourner / faire du profit' },
-  { v1: 'split', v2: 'split', v3: 'split', t: 'diviser / scinder (actions / parts)' },
-  { v1: 'spread', v2: 'spread', v3: 'spread', t: 'propager / étendre (marché)' },
-  { v1: 'spring', v2: 'sprang', v3: 'sprung', t: 'bondir / surgir' },
-  { v1: 'stand', v2: 'stood', v3: 'stood', t: 'se tenir debout / tolérer' },
-  { v1: 'steal', v2: 'stole', v3: 'stolen', t: 'voler / dérober' },
-  { v1: 'stick', v2: 'stuck', v3: 'stuck', t: 'coller / respecter (un budget)' },
-  { v1: 'strike', v2: 'struck', v3: 'struck / stricken', t: 'frapper / faire grève' },
-  { v1: 'swear', v2: 'swore', v3: 'sworn', t: 'jurer / prêter serment' },
-  { v1: 'sweep', v2: 'swept', v3: 'swept', t: 'balayer' },
-  { v1: 'swim', v2: 'swam', v3: 'swung', t: 'nager' },
-  { v1: 'swing', v2: 'swung', v3: 'swung', t: 'osciller (taux de change)' },
-  { v1: 'take', v2: 'took', v3: 'taken', t: 'prendre (des risques / décisions)' },
-  { v1: 'teach', v2: 'taught', v3: 'taught', t: 'enseigner / former' },
-  { v1: 'tear', v2: 'tore', v3: 'torn', t: 'déchirer' },
-  { v1: 'tell', v2: 'told', v3: 'told', t: 'dire / informer' },
-  { v1: 'think', v2: 'thought', v3: 'thought', t: 'penser' },
-  { v1: 'throw', v2: 'threw', v3: 'thrown', t: 'jeter / rejeter' },
-  { v1: 'undergo', v2: 'underwent', v3: 'undergone', t: 'subir / passer (audit)' },
-  { v1: 'understand', v2: 'understood', v3: 'understood', t: 'comprendre' },
-  { v1: 'undertake', v2: 'undertook', v3: 'undertaken', t: 'entreprendre (projet)' },
-  { v1: 'upset', v2: 'upset', v3: 'upset', t: 'contrarier / déstabiliser' },
-  { v1: 'wake', v2: 'woke', v3: 'woken', t: 'se réveiller' },
-  { v1: 'wear', v2: 'wore', v3: 'woken', t: 'porter / s\'user' },
-  { v1: 'weep', v2: 'wept', v3: 'wept', t: 'pleurer' },
-  { v1: 'win', v2: 'won', v3: 'won', t: 'gagner (parts de marché / prix)' },
-  { v1: 'withdraw', v2: 'withdrew', v3: 'withdrawn', t: 'retirer (fonds / offre)' },
-  { v1: 'write', v2: 'wrote', v3: 'wrote', t: 'écrire (un rapport / e-mail)' }
-];
-
-// ===================== CORE SYSTEM GRAMMAR DATA =====================
+// ===================== BASE DE DONNÉES ÉTENDUE (QCM THEORIQUE & BUSINESS) =====================
 
 const TENSE_DATA = {
   preterit: {
@@ -769,25 +696,25 @@ const PREP_DETAILS = {
   at: {
     title: 'AT — Localisation Ponctuelle',
     color: '#4f8cff',
-    rule: 'AT cible une coordonnée précise ou un moment atomique sur une échelle.',
-    geo: ['at Gate 14', 'at the business lounge', 'at corporate headquarters'],
-    time: ['at 07:45 AM', 'at noon', 'at the end of the fiscal year'],
+    rule: 'AT cible une coordonnée précise ou un moment atomique sur une échelle. Représentation vectorielle d\'un point mathématique.',
+    geo: ['at Gate 14', 'at the business lounge', 'at corporate headquarters', 'at the front desk'],
+    time: ['at 07:45 AM', 'at noon', 'at the end of the fiscal year', 'at closing time'],
     trap: 'On utilise AT pour un point d\'étape ("at London LHR") mais IN pour la zone géographique de la ville ("in London").'
   },
   on: {
     title: 'ON — Support Topographique & Unité de Jour',
     color: '#22d87a',
-    rule: 'ON s\'apply aux surfaces de contact physiques, aux axes directionnels, ainsi qu\'aux jours précis.',
-    geo: ['on the train', 'on the A380 flight', 'on the second floor'],
-    time: ['on Monday morning', 'on October 24th', 'on arrival day'],
+    rule: 'ON s\'applique aux surfaces de contact physiques, aux axes directionnels, ainsi qu\'aux segments temporels équivalents à 24h (jours).',
+    geo: ['on the train', 'on the A380 flight', 'on the second floor', 'on Wall Street'],
+    time: ['on Monday morning', 'on October 24th', 'on arrival day', 'on schedules'],
     trap: 'Bien que l\'on dise "in the evening", dès lors que le jour est spécifié, la règle ON s\'impose ("on Tuesday evening").'
   },
   in: {
     title: 'IN — Inclusion Tridimensionnelle & Conteneur Temporel',
     color: '#7b5fff',
-    rule: 'IN postule l\'immersion dans un espace clos ou un volume géographique déterminé, ou l\'inclusion dans des tranches de temps macro (mois, années).',
-    geo: ['in Manhattan', 'in the conference hall', 'in a taxi'],
-    time: ['in December', 'in 2026', 'in the quarter'],
+    rule: 'IN postule l\'immersion dans un espace clos ou un volume géographique déterminé, ou l\'inclusion dans des tranches de temps macro (mois, années, siècles).',
+    geo: ['in Manhattan', 'in the conference hall', 'in a taxi', 'in the United Kingdom'],
+    time: ['in December', 'in 2026', 'in the quarter', 'in the afternoon'],
     trap: 'Ne jamais utiliser IN devant une heure précise de rendez-vous d\'affaires.'
   }
 };
@@ -798,26 +725,48 @@ const PREP_QUIZ_DATA = [
   { sentence: 'The strategic report will be published ___ Thursday.', correct: 'on', opts: ['at','on','in'], rule: 'ON qualifie invariablement les jours de la semaine.' },
   { sentence: 'The VP reviewed the briefing files ___ the flight to London.', correct: 'on', opts: ['at','on','in'], rule: 'ON s\'applique aux moyens de transport en commun où l\'on peut se déplacer debout.' },
   { sentence: 'The investment fund was established ___ 2024.', correct: 'in', opts: ['at','on','in'], rule: 'IN est requis pour situer un événement au sein d\'une année civile.' },
-  { sentence: 'Our tech consultants are currently stationed ___ Heathrow Airport.', correct: 'at', opts: ['at','on','in'], rule: 'AT appréhende l\'aéroport comme un point cible de transition logistique.' }
+  { sentence: 'Our tech consultants are currently stationed ___ Heathrow Airport.', correct: 'at', opts: ['at','on','in'], rule: 'AT appréhende l\'aéroport comme un point cible de transition logistique.' },
+  { sentence: 'The presentation is scheduled ___ the 14th of November.', correct: 'on', opts: ['at','on','in'], rule: 'ON s\'utilise pour une date de calendrier précise.' },
+  { sentence: 'There is a major economic conference ___ Paris this week.', correct: 'in', opts: ['at','on','in'], rule: 'IN s\'utilise pour les villes et les entités géopolitiques.' }
 ];
 
 const FICHES_DATA = [
   {
     tag: 'piege', label: 'Rupture vs Bilan',
     title: 'L\'incompatibilité absolue : Present Perfect + Marqueur Révolu',
-    content: `C\'est la faute la plus lourdement sanctionnée en QCM. Le Present Perfect est un temps du présent. Si un repère temporel verrouille le passé (yesterday, ago, last week), le Simple Past est obligatoire.`,
+    content: `C\'est la faute la plus lourdement sanctionnée en QCM. Le <b>Present Perfect</b> est un temps du présent. Il ne peut supporter aucune attache chronologique close. Si un repère temporel verrouille le passé (<i>yesterday, ago, in 2018, last week</i>), le <b>Simple Past</b> est obligatoire.`,
     examples: [
-      { label: '✓ Correct', cls: 'correct', text: 'The executive committee finalized the contract last Friday.' },
-      { label: '✗ Incorrect', cls: 'wrong', text: 'The executive committee has finalized the contract last Friday.' }
+      { label: '✓ Correct', cls: 'correct', text: 'The executive committee has finalized the contract.' },
+      { label: '✗ Incorrect', cls: 'wrong', text: 'The executive committee has finalized the contract last Friday.' },
+      { label: '✓ Rectifié', cls: 'correct', text: 'The executive committee finalized the contract last Friday.' }
     ]
   },
   {
     tag: 'form', label: 'Syntaxe Adverbiale',
     title: 'Topographie des adverbes de fréquence et d\'aspect',
-    content: `Les marqueurs tels que always, never, just, already s'insèrent immédiatement après l'auxiliaire et avant le verbe lexical.`,
+    content: `Les marqueurs tels que <i>always, never, just, already</i> obéissent à une règle de positionnement stricte : ils s'insèrent immédiatement <b>après l'auxiliaire</b> (ou le premier auxiliaire s'il y en a plusieurs) et <b>avant le verbe lexical (participe passé)</b>.`,
     examples: [
       { label: '✓ Correct', cls: 'correct', text: 'They have just upgraded my business class ticket.' },
       { label: '✗ Incorrect', cls: 'wrong', text: 'They just have upgraded my business class ticket.' }
+    ]
+  },
+  {
+    tag: 'nuance', label: 'Valeur Temporelle',
+    title: 'Since vs For — Découpage Sémantique de l\'Étendue',
+    content: `<b>Since</b> exige un ancrage initial (le point de départ chronologique précis : <i>since 2021, since his promotion</i>). <b>For</b> quantifie une durée globale, une mesure de l\'intervalle (<i>for six months, for two hours</i>). Les deux impliquent l\'usage d'un aspect Perfect.`,
+    examples: [
+      { label: '✓ Point de départ', cls: 'correct', text: 'Marcus has been flying with us since 2015.' },
+      { label: '✓ Quantification', cls: 'correct', text: 'Marcus has been flying with us for 11 years.' },
+      { label: '✗ Erreur classique', cls: 'wrong', text: 'Marcus flies here since two years.' }
+    ]
+  },
+  {
+    tag: 'piege', label: 'Morphologie',
+    title: 'Le piège phonétique des verbes irréguliers du voyage d\'affaires',
+    content: `Certains verbes subissent des modifications vocaliques trompeuses en passant du prétérit au participe passé (V2 ➔ V3). Les QCM exploitent ces confusions. Exemples : <i>Fly ➔ Flew ➔ Flown</i> ; <i>Choose ➔ Chose ➔ Chosen</i> ; <i>Spend ➔ Spent ➔ Spent</i>.`,
+    examples: [
+      { label: '✓ Participe Passé', cls: 'correct', text: 'He has chosen to commute via the NyLon network.' },
+      { label: '✗ Forme barbare', cls: 'wrong', text: 'He has choosed/chosened the morning flight.' }
     ]
   }
 ];
@@ -830,12 +779,17 @@ const QCM_QUESTIONS = [
     question: 'Quelle est la justification théorique fondamentale de l\'usage du Present Perfect Simple ici ?',
     options: [
       { text: 'A. L\'action s\'est répétée un nombre défini de fois dans un passé lointain.', cls: 'wrong' },
-      { text: 'B. L\'état a commencé dans le passé et se poursuit au moment présent (continuité introduite par since).', cls: 'correct' },
-      { text: 'C. Le verbe exprime une vérité générale intemporelle.', cls: 'wrong' }
+      { text: 'B. L\'état a commencé dans le passé et se poursuit au moment présent (continuité d\'un verbe d\'état introduite par since).', cls: 'correct' },
+      { text: 'C. Le verbe exprime une vérité générale intemporelle.', cls: 'wrong' },
+      { text: 'D. "Since" force structurellement l\'utilisation du prétérit continu.', cls: 'wrong' }
     ],
     correct: 1,
     skillKey: 'aspect_accompli',
-    feedback: { rule: 'Pour un verbe d\'état, le lien entre le passé et le présent s\'exprime via le Present Perfect Simple, activé par "since".', clue: '"Since" signale le point de départ d\'une situation qui s\'étend jusqu\'à maintenant.', counter: 'Si la relation était terminée : "We were partners in 2024."' }
+    feedback: {
+      rule: 'Pour un verbe d\'état (be, know, have), le lien entre le passé et le présent s\'exprime via le Present Perfect Simple, activé ici par le repère initial "since".',
+      clue: 'Le connecteur "since" signale le point de départ d\'une situation qui s\'étend jusqu\'à l\'instant de parole.',
+      counter: 'Si la relation était terminée : "We were partners for two years, but we terminated the contract in 2024."'
+    }
   },
   {
     type: 't2', typeName: 'Type 2 — Analyse d\'erreur',
@@ -844,11 +798,93 @@ const QCM_QUESTIONS = [
     question: 'Pourquoi l\'aspect progressif du passé (Past Continuous) est-il incorrect dans cet énoncé isolé ?',
     options: [
       { text: 'A. "Two days ago" exige impérativement le Present Perfect.', cls: 'wrong' },
-      { text: 'B. "Ago" marque une rupture temporelle nette et rapporte un fait ponctuel clos, ce qui nécessite le prétérit simple.', cls: 'correct' }
+      { text: 'B. Le Past Continuous ne peut pas décrire une action impliquant un document écrit.', cls: 'wrong' },
+      { text: 'C. "Ago" marque une rupture temporelle nette et rapporte un fait ponctuel acté, ce qui nécessite le prétérit simple et non un aspect de processus en cours.', cls: 'correct' },
+      { text: 'D. Le sujet de la phrase aurait dû être au pluriel pour valider l\'accord syntaxique.', cls: 'wrong' }
+    ],
+    correct: 2,
+    skillKey: 'aspect_progressif',
+    feedback: {
+      rule: 'Un fait passé localisé précisément par "ago" exprime un événement historique daté. L\'aspect simple du prétérit est requis pour clore le procès.',
+      clue: 'Le déictique "ago" ancre le verbe dans le passé révolu de manière définitive.',
+      counter: 'Correct : "The director finished the deck two days ago" OU "He was finishing the deck when his phone rang."'
+    }
+  },
+  {
+    type: 't3', typeName: 'Type 3 — Nuance Sémantique',
+    sentence: 'Scénario : Vous devez annoncer au Directeur Financier que le budget du déplacement à Londres est entièrement épuisé.',
+    sentenceFmt: null,
+    question: 'Quelle formulation théorique met correctement l\'accent sur le RÉSULTAT présent de l\'action plutôt que sur le processus ?',
+    options: [
+      { text: 'A. "We spent the travel budget all morning."', cls: 'wrong' },
+      { text: 'B. "We have been spending the travel budget." (Insistance sur l\'activité continue)', cls: 'wrong' },
+      { text: 'C. "We have spent the entire travel budget." (Constat du résultat qualitatif : le compte est à zéro)', cls: 'correct' },
+      { text: 'D. "We are spending the travel budget yesterday."', cls: 'wrong' }
+    ],
+    correct: 2,
+    skillKey: 'nuance_pp_ppc',
+    feedback: {
+      rule: 'Le Present Perfect Simple est l\'aspect du bilan quantitatif ou qualitatif. On regarde les conséquences actuelles d\'une action accomplie.',
+      clue: '"Entire budget" oriente l\'énoncé vers l\'irréversibilité du résultat actuel.',
+      counter: '"We have been spending..." signifierait qu\'on est en train d\'effectuer des dépenses successives, sans insister sur la clôture du solde.'
+    }
+  },
+  {
+    type: 't2', typeName: 'Type 2 — Analyse d\'erreur',
+    sentence: '"The international consultant has never flew on an overnight flight before."',
+    sentenceFmt: 'The international consultant has never <span class="blank err">flew</span> on an overnight flight before.',
+    question: 'Quelle règle de morphologie grammaticale cette phrase enfreint-elle ?',
+    options: [
+      { text: 'A. L\'adverbe "never" doit être placé après le verbe lexical.', cls: 'wrong' },
+      { text: 'B. L\'auxiliaire "has" doit être remplacé par "is".', cls: 'wrong' },
+      { text: 'C. Après l\'auxiliaire HAVE au Present Perfect, le verbe doit prendre la forme du participe passé (V3 : flown) et non du prétérit (V2 : flew).', cls: 'correct' },
+      { text: 'D. Le mot "before" est incompatible avec le Present Perfect.', cls: 'wrong' }
+    ],
+    correct: 2,
+    skillKey: 'morphologie_verbale',
+    feedback: {
+      rule: 'Structure du Present Perfect : S + HAVE/HAS + Participe Passé. Pour le verbe irrégulier "fly", les formes sont fly / flew / flown.',
+      clue: 'La présence de l\'auxiliaire "has" interdit formellement l\'usage direct du prétérit simple "flew".',
+      counter: 'Correct : "He has never flown..." ou bien au prétérit simple "He flew to London last year."'
+    }
+  },
+  {
+    type: 't1', typeName: 'Type 1 — Justification',
+    sentence: '"While our CEO was negotiating in New York, our London stocks crashed."',
+    sentenceFmt: 'While our CEO <span class="blank">was negotiating</span> in NY, our London stocks <span class="blank">crashed</span>.',
+    question: 'Expliquez l\'articulation aspectuelle entre ces deux formes verbales du passé.',
+    options: [
+      { text: 'A. Les deux actions sont instantanées et se produisent de manière séquentielle.', cls: 'wrong' },
+      { text: 'B. Le Past Continuous installe le processus long en arrière-plan, tandis que le Simple Past marque l\'irruption d\'un événement ponctuel disruptif.', cls: 'correct' },
+      { text: 'C. Le prétérit "crashed" exprime une habitude passée révolue.', cls: 'wrong' },
+      { text: 'D. "While" nécessite obligatoirement l\'utilisation du présent de l\'indicatif.', cls: 'wrong' }
     ],
     correct: 1,
     skillKey: 'aspect_progressif',
-    feedback: { rule: 'Un fait passé localisé par "ago" exprime un événement historique daté. L\'aspect simple du prétérit est requis.', clue: '"Ago" ancre le verbe dans le passé révolu de manière définitive.', counter: 'Correct : "The director finished the deck two days ago."' }
+    feedback: {
+      rule: 'L\'opposition aspectuelle engendre un contraste : processus linéaire non borné (was negotiating) confronté à un jalon événementiel net (crashed).',
+      clue: 'Le subordonnant "while" introduit par définition une durée, un cadre temporel fluide.',
+      counter: 'Si les deux actions étaient de même nature : "The stock crashed when the clock struck 4 PM."'
+    }
+  },
+  {
+    type: 't3', typeName: 'Type 3 — Nuance Sémantique',
+    sentence: '"I have been answering client emails for three hours."',
+    sentenceFmt: 'I <span class="blank">have been answering</span> client emails for three hours.',
+    question: 'Quelle est la nuance introduite par la forme continue par rapport à la forme simple "I have answered client emails" ?',
+    options: [
+      { text: 'A. La forme continue prouve que l\'ensemble des emails a été définitivement traité et archivé.', cls: 'wrong' },
+      { text: 'B. La forme continue met l\'accent sur l\'investissement de temps, la pénibilité de la tâche ou l\'activité ininterrompue de l\'expéditeur.', cls: 'correct' },
+      { text: 'C. Elle indique que l\'action se déroulera demain à la même heure.', cls: 'wrong' },
+      { text: 'D. Elle est purement esthétique et n\'apporte aucune modification sémantique.', cls: 'wrong' }
+    ],
+    correct: 1,
+    skillKey: 'nuance_pp_ppc',
+    feedback: {
+      rule: 'L\'aspect HAVE + BEEN + V-ing déplace le centre de gravité de l\'énoncé : on ne comptabilise pas les objets produits, on qualifie l\'activité du sujet.',
+      clue: 'Le modificateur "for three hours" appuie sur la durée endurée par l\'employé.',
+      counter: 'Si on quantifie le produit : "I have answered 45 emails." (Forme simple requise).'
+    }
   }
 ];
 
@@ -857,71 +893,204 @@ const NYLON_QUESTIONS = [
     context: '📧 Rédaction d\'un mémo interne à bord du vol JFK → LHR :',
     sentence: '"Our transnational consultancy [   ] five audit campaigns in London since January."',
     question: 'Quel choix verbal traduit rigoureusement le bilan chiffré à ce jour ?',
-    options: ['A. conducted', 'B. has conducted', 'C. has been conducting'],
+    options: [
+      'A. conducted',
+      'B. has conducted',
+      'C. has been conducting',
+      'D. was conducting'
+    ],
     correct: 1,
     skillKey: 'aspect_accompli',
-    feedback: { rule: 'Bilan dénombré (5 campagnes) corrélé au présent par "since" : Present Perfect Simple requis.', clue: 'On compte les résultats ➔ incompatibilité avec la forme continue.', counter: 'Continuous : "We have been conducting audits since January."' }
+    feedback: { rule: 'Bilan dénombré (5 campagnes) corrélé au présent par "since" : Present Perfect Simple requis.', clue: 'On compte les résultats ("five campaigns") ➔ incompatibilité avec la forme continue.', counter: 'Si l\'action continuait sans décompte : "We have been conducting audits since January."' }
+  },
+  {
+    context: '🛂 Entretien avec la police des frontières (UK Border Force) :',
+    sentence: '"When ___ you ___ your corporate visa application?" — "Two weeks ago in New York."',
+    question: 'Quelle structure d\'interrogation est grammaticalement valide sachant que la réponse contient "ago" ?',
+    options: [
+      'A. have / submitted',
+      'B. did / submit',
+      'C. were / submitting',
+      'D. do / submit'
+    ],
+    correct: 1,
+    skillKey: 'detection_marqueurs',
+    feedback: { rule: 'La question porte sur un moment précis du passé, validé par "ago". L\'auxiliaire DID du prétérit simple est requis.', clue: '"When" combiné à une réponse en "ago" implique une rupture temporelle.', counter: 'On ne peut jamais formuler : "When have you submitted...?"' }
+  },
+  {
+    context: '📊 Débriefing stratégique dans le quartier financier de la City :',
+    sentence: '"While our lead analyst ___ the quarterly slides, the connection with NY broke down."',
+    question: 'Sélectionnez la forme correcte pour établir l\'action d\'arrière-plan.',
+    options: [
+      'A. has displayed',
+      'B. was displaying',
+      'C. displayed',
+      'D. has been displaying'
+    ],
+    correct: 1,
+    skillKey: 'aspect_progressif',
+    feedback: { rule: 'L\'action longue d\'affichage est interrompue par la coupure réseau (broke down). Past Continuous obligatoire.', clue: 'Le connecteur de simultanéité processive "while" introduit l\'action.', counter: 'Actions simultanées courtes : "He stood up when the link broke."' }
+  },
+  {
+    context: '💼 Négociation contractuelle chez un client à Canary Wharf :',
+    sentence: '"We ___ for a compromise all afternoon, and we still haven\'t reached an agreement."',
+    question: 'Choisissez la nuance traduisant l\'effort continu et la fatigue de la délégation.',
+    options: [
+      'A. looked',
+      'B. have looked',
+      'C. have been looking',
+      'D. are looking'
+    ],
+    correct: 2,
+    skillKey: 'nuance_pp_ppc',
+    feedback: { rule: 'Combinaison d\'une activité ininterrompue ("all afternoon") et d\'un blocage présent : Present Perfect Continuous idéal.', clue: '"All afternoon" indique l\'obsession du processus temporel.', counter: 'Si la solution était trouvée : "We have found a compromise now."' }
+  },
+  {
+    context: '📝 Rapport de frais d\'expatriation envoyé aux RH :',
+    sentence: '"The executive assistant ___ the hotel invoice last night before leaving LHR."',
+    question: 'Identifiez le temps nécessaire pour un fait historique daté précisément.',
+    options: [
+      'A. has settled',
+      'B. settled',
+      'C. settles',
+      'D. was settling'
+    ],
+    correct: 1,
+    skillKey: 'morphologie_verbale',
+    feedback: { rule: 'L\'indicateur de temps "last night" ancre l\'énoncé dans le passé fini. Prétérit simple obligatoire.', clue: '"Last night" rompt tout lien avec l\'instant présent.', counter: 'Invalide : "She has settled the invoice last night."' }
   }
 ];
 
 const RULES_GOLD = [
-  { num: '01', text: 'Present Perfect + Marqueur de date passée (yesterday, ago) = EXCLUSION STRUCTURELLE.', ex_ok: 'He signed the contract yesterday.', ex_no: 'He has signed the contract yesterday.' },
-  { num: '02', text: '"Since" = point de repère initial. "For" = segment de durée quantitative.', ex_ok: 'Since 2024 / For two years.', ex_no: 'Since two years.' }
+  { num: '01', text: 'Present Perfect + Marqueur de date passée (yesterday, ago, last) = EXCLUSION STRUCTURELLE.', ex_ok: 'He signed the contract yesterday.', ex_no: 'He has signed the contract yesterday.' },
+  { num: '02', text: '"Since" introduit un point de repère initial. "For" mesure un segment de durée quantitative.', ex_ok: 'Since 2024 / For two years.', ex_no: 'Since two years / For 2024.' },
+  { num: '03', text: 'Les adverbes de fréquence s\'intercalent immédiatement après l\'auxiliaire de conjugaison.', ex_ok: 'He has always travelled alone.', ex_no: 'He always has travelled alone.' },
+  { num: '04', text: 'Le prétérit en -ING sert de toile de fond. Le prétérit simple matérialise l\'interruption ponctuelle.', ex_ok: 'I was calling NY when she walked in.', ex_no: 'I called NY when she was walking in.' },
+  { num: '05', text: 'Dénombrement de résultats objectifs = Aspect Simple. Pénibilité ou focus sur la durée = Aspect Continu.', ex_ok: 'I have written three memos.', ex_no: 'I have been writing three memos.' },
+  { num: '06', text: 'AT = Point de coordonnées spatial/temporel. ON = Coordonnée de jour/surface. IN = Volume clos/période macro.', ex_ok: 'At 5 PM, on Monday, in London.', ex_no: 'In 5 PM, at Monday, on London.' }
 ];
 
 const MICRO_QCM = [
-  { q: 'Sélectionnez la syntaxe exacte : "The flight ___ landed at JFK."', opts: ['has just', 'just has', 'is just'], correct: 0, key: 'morphologie_verbale' },
-  { q: 'Complétez : "We are currently ___ the international terminal."', opts: ['in', 'on', 'at'], correct: 2, key: 'precision_spatiotemporelle' }
+  { q: 'Sélectionnez la syntaxe exacte : "The flight ___ landed at JFK."', opts: ['has just', 'just has', 'is just', 'had just been'], correct: 0, key: 'morphologie_verbale' },
+  { q: 'Complétez : "We are currently ___ the international terminal."', opts: ['in', 'on', 'at', 'by'], correct: 2, key: 'precision_spatiotemporelle' },
+  { q: 'Quelle option exclut le Present Perfect ?', opts: ['already', 'yet', 'three days ago', 'since Tuesday'], correct: 2, key: 'detection_marqueurs' },
+  { q: 'Identifiez la forme correcte : "He ___ the corporate network when it crashed."', opts: ['used', 'was using', 'has used', 'has been using'], correct: 1, key: 'aspect_progressif' },
+  { q: 'Complétez : "They have been analyzing our financial charts ___ hours."', opts: ['since', 'for', 'during', 'ago'], correct: 1, key: 'detection_marqueurs' },
+  { q: 'Trouvez l\'erreur : "The VP has chosen to travel on Monday."', opts: ['has chosen ➔ chose', 'on ➔ in', 'has chosen ➔ has choosed', 'Aucune erreur'], correct: 3, key: 'morphologie_verbale' },
+  { q: 'Formule appropriée : "The plane tickets are ___ the desk."', opts: ['at', 'on', 'in', 'underneath'], correct: 1, key: 'precision_spatiotemporelle' },
+  { q: 'Complétez : "She ___ her regional presentation before the fire alarm rang."', opts: ['finished', 'was finishing', 'has finished', 'finishes'], correct: 0, key: 'aspect_progressif' },
+  { q: 'Syntaxe de bilan : "The CEO ___ to Tokyo three times this quarter."', opts: ['flew', 'has flown', 'has been flying', 'was flying'], correct: 1, key: 'aspect_accompli' },
+  { q: 'Quelle préposition est requise ? "The trade conference takes place ___ October."', opts: ['at', 'on', 'in', 'to'], correct: 2, key: 'precision_spatiotemporelle' },
+  { q: 'Position de l\'adverbe : "We ___ skip a security briefing."', opts: ['never have', 'have never', 'have skipped never', 'never have skipped'], correct: 1, key: 'morphologie_verbale' },
+  { q: 'Complétez : "Marcus ___ for the client since 9 AM." (Activité longue)', opts: ['waits', 'has waited', 'has been waiting', 'is waiting'], correct: 2, key: 'nuance_pp_ppc' },
+  { q: 'Quelle forme est impossible ? "He has ___ to London."', opts: ['been', 'gone', 'went', 'just flown'], correct: 2, key: 'morphologie_verbale' },
+  { q: 'Complétez : "The train departs ___ Monday mornings at 8."', opts: ['at', 'on', 'in', 'from'], correct: 1, key: 'precision_spatiotemporelle' },
+  { q: 'Analyse d\'aspect : "I have read your report." signifie :', opts: ['Je lis encore', 'L\'action est finie, je connais le contenu', 'Je vais le lire', 'Je lisais quand tu as appelé'], correct: 1, key: 'aspect_accompli' }
 ];
 
-// ===================== LOCAL STORAGE & STATE REPLICATOR =====================
+// ===================== ETAT DU SYSTEME DE NOTATION & CACHE LOCAL =====================
 
 const COMPETENCE_KEYS = {
   aspect_accompli: "Maîtrise aspect accompli (PP)",
   precision_spatiotemporelle: "Précision spatio-temporelle (In/On/At)",
   aspect_progressif: "Aspect progressif (Past Cont.)",
-  morphologie_verbale: "Morphologie verbale"
+  morphologie_verbale: "Morphologie verbale",
+  nuance_pp_ppc: "Nuance PP vs PP Cont.",
+  detection_marqueurs: "Détection de marqueurs"
 };
 
 let userStats = {
-  resolved: 0, correct: 0,
-  skills: { aspect_accompli: { correct: 0, total: 0 }, precision_spatiotemporelle: { correct: 0, total: 0 }, aspect_progressif: { correct: 0, total: 0 }, morphologie_verbale: { correct: 0, total: 0 } },
+  resolved: 0,
+  correct: 0,
+  skills: {
+    aspect_accompli: { correct: 0, total: 0 },
+    precision_spatiotemporelle: { correct: 0, total: 0 },
+    aspect_progressif: { correct: 0, total: 0 },
+    morphologie_verbale: { correct: 0, total: 0 },
+    nuance_pp_ppc: { correct: 0, total: 0 },
+    detection_marqueurs: { correct: 0, total: 0 }
+  },
   prep_quiz: { correct: 0, total: 0 }
 };
 
 function initLocalStorageState() {
-  const cached = localStorage.getItem('contextual_english_state_v3');
-  if (cached) { try { userStats = JSON.parse(cached); } catch(e) { localStorage.removeItem('contextual_english_state_v3'); } }
+  const cached = localStorage.getItem('contextual_english_state_v2');
+  if (cached) {
+    try {
+      userStats = JSON.parse(cached);
+      // Sécurité si structure obsolète
+      if(!userStats.skills.detection_marqueurs) throw new Error("Upgrade structure");
+    } catch(e) {
+      localStorage.removeItem('contextual_english_state_v2');
+    }
+  }
   updateDashboardDOM();
 }
 
 function saveStateToCache() {
-  localStorage.setItem('contextual_english_state_v3', JSON.stringify(userStats));
+  localStorage.setItem('contextual_english_state_v2', JSON.stringify(userStats));
   updateDashboardDOM();
 }
 
+function clearLocalStorageData() {
+  localStorage.removeItem('contextual_english_state_v2');
+  userStats = {
+    resolved: 0,
+    correct: 0,
+    skills: {
+      aspect_accompli: { correct: 0, total: 0 },
+      precision_spatiotemporelle: { correct: 0, total: 0 },
+      aspect_progressif: { correct: 0, total: 0 },
+      morphologie_verbale: { correct: 0, total: 0 },
+      nuance_pp_ppc: { correct: 0, total: 0 },
+      detection_marqueurs: { correct: 0, total: 0 }
+    },
+    prep_quiz: { correct: 0, total: 0 }
+  };
+  saveStateToCache();
+  location.reload();
+}
+
 function recordAnswerMetrics(skillKey, isCorrect) {
-  if (userStats.skills[skillKey]) { userStats.skills[skillKey].total++; if (isCorrect) userStats.skills[skillKey].correct++; }
-  userStats.resolved++; if (isCorrect) userStats.correct++;
+  if (userStats.skills[skillKey]) {
+    userStats.skills[skillKey].total++;
+    if (isCorrect) userStats.skills[skillKey].correct++;
+  }
+  userStats.resolved++;
+  if (isCorrect) userStats.correct++;
   saveStateToCache();
 }
 
 function getSkillPercentage(key) {
   const item = userStats.skills[key];
-  if (!item || item.total === 0) return 50;
+  if (!item || item.total === 0) return 50; // Valeur médiane neutre par défaut
   return Math.round((item.correct / item.total) * 100);
 }
 
 function updateDashboardDOM() {
+  document.getElementById('badge-qcm-count').textContent = QCM_QUESTIONS.length;
   document.getElementById('stat-resolved-count').textContent = userStats.resolved;
+  
   const globalScore = userStats.resolved > 0 ? Math.round((userStats.correct / userStats.resolved) * 100) : 0;
   document.getElementById('stat-score-global').textContent = globalScore + '%';
+
   const prepScore = userStats.prep_quiz.total > 0 ? Math.round((userStats.prep_quiz.correct / userStats.prep_quiz.total) * 100) : 0;
   document.getElementById('stat-prep-score').textContent = prepScore + '%';
 
-  let lowestScore = 101, lowestKey = null, hasData = false;
+  // Identifier le point le plus faible
+  let lowestScore = 101;
+  let lowestKey = null;
+  let hasData = false;
+
   for (let key in userStats.skills) {
-    if(userStats.skills[key].total > 0) { hasData = true; const score = getSkillPercentage(key); if(score < lowestScore) { lowestScore = score; lowestKey = key; } }
+    if(userStats.skills[key].total > 0) {
+      hasData = true;
+      const score = getSkillPercentage(key);
+      if(score < lowestScore) {
+        lowestScore = score;
+        lowestKey = key;
+      }
+    }
   }
 
   const weakPointDisplay = document.getElementById('stat-weak-point');
@@ -929,71 +1098,130 @@ function updateDashboardDOM() {
   
   if (hasData && lowestKey) {
     weakPointDisplay.textContent = COMPETENCE_KEYS[lowestKey].split('(')[0].trim();
-    riskZone.innerHTML = `<div style="background:var(--bg4);border-radius:8px;padding:8px 12px;font-size:12px;">🚨 Priorité critique d'analyse : <b>${COMPETENCE_KEYS[lowestKey]}</b> (${lowestScore}% de réussite).</div>`;
+    weakPointDisplay.style.fontSize = "13px";
+    
+    riskZone.innerHTML = `
+      <div style="display:flex;align-items:center;gap:10px;background:var(--bg4);border-radius:8px;padding:8px 12px;">
+        <span style="color:var(--red);font-size:18px;">①</span>
+        <div style="flex:1">
+          <div style="font-size:12px;color:var(--text);font-weight:500;">${COMPETENCE_KEYS[lowestKey]}</div>
+          <div style="font-size:11px;color:var(--text3);">Score actuel insuffisant (${lowestScore}%) — Focus requis.</div>
+        </div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--red);">URGENT</div>
+      </div>
+    `;
   } else {
     weakPointDisplay.textContent = "Aucun data";
-    riskZone.innerHTML = `<div style="font-size:12px;color:var(--text3);">Complétez les QCM de l'application pour activer les calculs prédictifs.</div>`;
+    riskZone.innerHTML = `<div style="font-size:12px;color:var(--text3);">Répondez aux QCM pour cartographier vos risques d'échec du contrôle.</div>`;
   }
 
+  // Mettre à jour les barres graphiques du Dashboard
   const barsContainer = document.getElementById('dashboard-skills-bars');
   if (barsContainer) {
     barsContainer.innerHTML = Object.keys(COMPETENCE_KEYS).map(key => {
       const pct = getSkillPercentage(key);
       const color = pct >= 75 ? 'var(--green)' : pct >= 50 ? 'var(--yellow)' : 'var(--red)';
-      return `<div class="skill-row" style="margin-bottom:10px;"><div class="skill-name" style="font-size:12px;">${COMPETENCE_KEYS[key]}</div><div class="skill-bar-wrap"><div class="skill-bar" style="width:${pct}%;background:${color}"></div></div><div class="skill-pct" style="color:${color};">${pct}%</div></div>`;
+      return `
+        <div class="skill-row" style="margin-bottom:10px;">
+          <div class="skill-name" style="font-size:12px;color:var(--text2);">${COMPETENCE_KEYS[key]}</div>
+          <div class="skill-bar-wrap"><div class="skill-bar" style="width:${pct}%;background:${color}"></div></div>
+          <div class="skill-pct" style="color:${color}; font-weight:600;">${pct}%</div>
+        </div>
+      `;
     }).join('');
   }
 }
 
-// ===================== RUNTIME ENGINES & SEARCH FUNCTION =====================
+// ===================== ACTIONS ET NAVIGATION =====================
+
+let qcmMode = 'all';
+let qcmIndex = 0;
+let nylonIndex = 0;
+let nylonScore = 0;
+let nylonTimer = null;
+let nylonTimeLeft = 900;
+let nylonStarted = false;
+let microIndex = 0;
+let microAnswered = false;
 
 function showPage(id) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  const target = document.getElementById('page-' + id);
-  if(target) target.classList.add('active');
+  
+  const targetPage = document.getElementById('page-' + id);
+  if(targetPage) targetPage.classList.add('active');
+  
+  if(event && event.currentTarget) {
+    event.currentTarget.classList.add('active');
+  }
+
   if (id === 'timeline') renderTimeline();
   if (id === 'prepositions') renderPrepQuiz();
   if (id === 'fiches') renderFiches();
-  if (id === 'verbs') renderVerbsTable();
   if (id === 'qcm') renderQcm();
   if (id === 'nylon') renderNylonQuestion();
   if (id === 'radar') renderRadar();
+  
   updateDashboardDOM();
 }
 
-// NOVELTY: VERB INJECTION & OPTIMIZED PATTERN FILTERING
-function renderVerbsTable() {
-  const tbody = document.getElementById('verbs-table-body');
-  tbody.innerHTML = VERBS_100_DATA.map(v => `
-    <tr class="verb-row">
-      <td class="v-base">${v.v1}</td>
-      <td class="v-pre">${v.v2}</td>
-      <td class="v-pp">${v.v3}</td>
-      <td class="v-trans">${v.t}</td>
-    </tr>
-  `).join('');
+// ===================== MODULES ET RENDUS SÉMANTIQUES =====================
+
+function renderTimeline() {
+  selectTense('pp');
 }
 
-function filterVerbsTable() {
-  const query = document.getElementById('verb-search').value.toLowerCase();
-  const rows = document.querySelectorAll('.verb-row');
-  rows.forEach(row => {
-    const text = row.textContent.toLowerCase();
-    row.style.display = text.includes(query) ? '' : 'none';
-  });
+function selectTense(key) {
+  document.querySelectorAll('.tl-event').forEach(e => e.classList.remove('selected'));
+  const events = document.querySelectorAll('.tl-event');
+  const keys = ['preterit','pastcont','pp','ppcont'];
+  const idx = keys.indexOf(key);
+  if (events[idx]) events[idx].classList.add('selected');
+
+  const d = TENSE_DATA[key];
+  const detail = document.getElementById('tl-detail');
+  detail.innerHTML = `
+    <div class="tl-detail-tense" style="color:${d.color}">${d.name}</div>
+    <div class="tl-detail-aspect">${d.aspect}</div>
+    <div class="tl-detail-grid">
+      <div class="tl-detail-col">
+        <h4>Spécification Syntaxique</h4>
+        <div class="formula-box">${d.formula}</div>
+        <h4 style="margin-top:12px;">Mécanique de l'Aspect</h4>
+        <p style="font-size:12px;color:var(--text2);line-height:1.7;">${d.aspect_detail}</p>
+      </div>
+      <div class="tl-detail-col">
+        <h4>Exemple Métier</h4>
+        <div class="tl-example">${d.example}</div>
+        <h4 style="margin-top:12px;">Déclencheurs (Marqueurs)</h4>
+        <div class="tl-markers">${d.markers.map(m => `<span class="marker-tag">${m}</span>`).join('')}</div>
+        <div style="margin-top:12px;font-size:11px;color:var(--red);background:rgba(255,79,110,0.05);border:1px solid rgba(255,79,110,0.15);border-radius:6px;padding:8px 10px;">⚡ Piège : ${d.trap}</div>
+      </div>
+    </div>
+  `;
 }
 
 function selectPrep(prep) {
   document.querySelectorAll('.prep-card').forEach(c => c.classList.remove('active'));
-  document.getElementById('prep-' + prep).classList.add('active');
+  const target = document.getElementById('prep-' + prep);
+  if(target) target.classList.add('active');
+
   const d = PREP_DETAILS[prep];
   const det = document.getElementById('prep-detail');
   det.style.display = 'block';
   document.getElementById('prep-detail-content').innerHTML = `
     <div class="card-title" style="color:${d.color}"><span class="dot" style="background:${d.color}"></span> ${d.title}</div>
-    <p style="font-size:13.5px;color:var(--text2);margin-bottom:12px;">${d.rule}</p>
-    <div style="font-size:12px; color:var(--text3)">Exemples d'application : ${d.geo.join(', ')}.</div>
+    <p style="font-size:13.5px;color:var(--text2);margin-bottom:16px;line-height:1.7;">${d.rule}</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+      <div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:1px;color:var(--text3);margin-bottom:8px;">Configuration Espace</div>
+        ${d.geo.map(e => `<div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text2);background:var(--bg4);border-radius:6px;padding:5px 10px;margin-bottom:4px;">${e}</div>`).join('')}
+      </div>
+      <div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:1px;color:var(--text3);margin-bottom:8px;">Configuration Temps</div>
+        ${d.time.map(e => `<div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text2);background:var(--bg4);border-radius:6px;padding:5px 10px;margin-bottom:4px;">${e}</div>`).join('')}
+      </div>
+    </div>
   `;
 }
 
@@ -1001,11 +1229,11 @@ function renderPrepQuiz() {
   const container = document.getElementById('prep-quiz');
   container.innerHTML = PREP_QUIZ_DATA.map((q, i) => `
     <div style="background:var(--bg4);border:1px solid var(--border);border-radius:10px;padding:14px 18px;" id="prepq-${i}">
-      <div style="font-family:'JetBrains Mono',monospace;font-size:13px;">${q.sentence}</div>
-      <div style="display:flex;gap:8px;margin-top:10px;">
-        ${q.opts.map(o => `<button onclick="submitPrepAnswer(${i},'${o}')" style="padding:6px 16px;border-radius:6px;border:1px solid var(--border2);background:var(--bg3);color:var(--text2);cursor:pointer;">${o.toUpperCase()}</button>`).join('')}
+      <div style="font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--text);margin-bottom:10px;">${q.sentence}</div>
+      <div style="display:flex;gap:8px;">
+        ${q.opts.map(o => `<button onclick="submitPrepAnswer(${i},'${o}')" style="padding:6px 16px;border-radius:6px;border:1px solid var(--border2);background:var(--bg3);color:var(--text2);font-family:'JetBrains Mono',monospace;font-size:12px;cursor:pointer;">${o.toUpperCase()}</button>`).join('')}
       </div>
-      <div id="prepq-fb-${i}" style="display:none;margin-top:8px;font-size:12px;color:var(--green)"></div>
+      <div id="prepq-fb-${i}" style="display:none;margin-top:8px;font-size:12px;font-weight:500;"></div>
     </div>
   `).join('');
 }
@@ -1013,111 +1241,414 @@ function renderPrepQuiz() {
 function submitPrepAnswer(i, ans) {
   const q = PREP_QUIZ_DATA[i];
   const fb = document.getElementById(`prepq-fb-${i}`);
-  document.querySelectorAll(`#prepq-${i} button`).forEach(b => b.disabled = true);
+  const btns = document.querySelectorAll(`#prepq-${i} button`);
+  
+  btns.forEach(b => b.disabled = true);
   const isCorrect = ans === q.correct;
-  userStats.prep_quiz.total++; if(isCorrect) userStats.prep_quiz.correct++;
+
+  userStats.prep_quiz.total++;
+  if(isCorrect) userStats.prep_quiz.correct++;
+  
+  // Rétroaction sur les métriques du radar
   recordAnswerMetrics('precision_spatiotemporelle', isCorrect);
-  fb.innerHTML = isCorrect ? `✓ Validé. ${q.rule}` : `✗ Échec. Réponse attendue : ${q.correct.toUpperCase()}. ${q.rule}`;
-  if(!isCorrect) fb.style.color = 'var(--red)';
+
+  if (isCorrect) {
+    fb.style.color = 'var(--green)';
+    fb.innerHTML = `✓ Alignement Grammatical Confirmé. ${q.rule}`;
+  } else {
+    fb.style.color = 'var(--red)';
+    fb.innerHTML = `✗ Violation de Règle. Réponse attendue : ${q.correct.toUpperCase()}. ${q.rule}`;
+  }
   fb.style.display = 'block';
 }
 
-function renderTimeline() { selectTense('pp'); }
-function selectTense(key) {
-  document.querySelectorAll('.tl-event').forEach(e => e.classList.remove('selected'));
-  const d = TENSE_DATA[key];
-  const detail = document.getElementById('tl-detail');
-  detail.innerHTML = `<div class="tl-detail-tense" style="color:${d.color}">${d.name}</div><div class="tl-detail-aspect">${d.aspect}</div><p style="font-size:12px;color:var(--text2);">${d.aspect_detail}</p><div class="tl-example">${d.example}</div>`;
-}
-
 function renderFiches() {
-  document.getElementById('fiches-container').innerHTML = FICHES_DATA.map((f, i) => `
-    <div class="fiche" id="fiche-${i}"><div class="fiche-header" onclick="toggleFiche(${i})"><span class="fiche-title">📌 ${f.title}</span><span>▶</span></div>
-    <div class="fiche-body"><p>${f.content}</p></div></div>
+  const c = document.getElementById('fiches-container');
+  c.innerHTML = FICHES_DATA.map((f, i) => `
+    <div class="fiche" id="fiche-${i}">
+      <div class="fiche-header" onclick="toggleFiche(${i})">
+        <div class="fiche-header-left">
+          <span class="fiche-tag ${f.tag}">${f.label}</span>
+          <span class="fiche-title">${f.title}</span>
+        </div>
+        <span class="fiche-arrow">▶</span>
+      </div>
+      <div class="fiche-body">
+        <p>${f.content}</p>
+        <div class="code-ex">
+          ${f.examples.map(e => `<div><span class="${e.cls}">${e.label}</span> : ${e.text}</div>`).join('')}
+        </div>
+      </div>
+    </div>
   `).join('');
 }
-function toggleFiche(i) { document.getElementById('fiche-' + i).classList.toggle('open'); }
 
-function setQcmMode(mode, btn) { qcmMode = mode; qcmIndex = 0; document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); renderQcm(); }
-function getFilteredQCM() { return qcmMode === 'all' ? QCM_QUESTIONS : QCM_QUESTIONS.filter(q => q.type === qcmMode); }
+function toggleFiche(i) {
+  document.getElementById('fiche-' + i).classList.toggle('open');
+}
+
+// ===================== SYSTEM ENGINE: DEEP LEARNING QCM =====================
+
+function setQcmMode(mode, btn) {
+  qcmMode = mode;
+  qcmIndex = 0;
+  document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderQcm();
+}
+
+function getFilteredQCM() {
+  if (qcmMode === 'all') return QCM_QUESTIONS;
+  return QCM_QUESTIONS.filter(q => q.type === qcmMode);
+}
 
 function renderQcm() {
   const qs = getFilteredQCM();
   const area = document.getElementById('qcm-question-area');
-  if (!qs.length) { area.innerHTML = '<div style="color:var(--text2);padding:20px;">Aucun descripteur disponible.</div>'; return; }
+  if (!qs.length) { area.innerHTML = '<div style="color:var(--text2);padding:20px;">Aucun descripteur disponible pour cette catégorie.</div>'; return; }
+  
   const q = qs[qcmIndex % qs.length];
-  document.getElementById('qcm-progress').style.width = ((qcmIndex / qs.length) * 100) + '%';
+  const pct = (qcmIndex / qs.length) * 100;
+  document.getElementById('qcm-progress').style.width = pct + '%';
+
   area.innerHTML = `
     <div class="q-card">
       <div class="q-type-badge ${q.type}">${q.typeName}</div>
-      <div class="q-sentence">${q.sentenceFmt || q.sentence}</div>
+      ${q.sentenceFmt ? `<div class="q-sentence">${q.sentenceFmt}</div>` : ''}
       <div class="q-question">${q.question}</div>
-      <div class="q-options">${q.options.map((o, i) => `<div class="q-option" id="qcm-opt-${i}" onclick="evalQcm(${i},${q.correct},'${q.skillKey}')"><div class="opt-letter">${String.fromCharCode(65+i)}</div><div>${o.text}</div></div>`).join('')}</div>
-      <div class="feedback-panel" id="qcm-fb"><div class="fb-sections"><div class="fb-section"><h5>Règle</h5><p>${q.feedback.rule}</p></div><div class="fb-section"><h5>Indice</h5><p>${q.feedback.clue}</p></div></div></div>
-      <button class="next-btn" id="qcm-next" style="display:none" onclick="qcmIndex++; renderQcm();">Question suivante →</button>
+      <div class="q-options">
+        ${q.options.map((o, i) => `
+          <div class="q-option" id="qcm-opt-${i}" onclick="evaluateQcmChoice(${i}, ${q.correct}, '${q.skillKey}')">
+            <div class="opt-letter">${String.fromCharCode(65+i)}</div>
+            <div>${o.text}</div>
+          </div>
+        `).join('')}
+      </div>
+      <div class="feedback-panel" id="qcm-feedback-panel">
+        <div class="fb-header"><div class="fb-status" id="qcm-fb-status"></div></div>
+        <div class="fb-sections">
+          <div class="fb-section"><h5>📌 Cadre Théorique</h5><p class="rule">${q.feedback.rule}</p></div>
+          <div class="fb-section"><h5>🔍 Analyse de l'Indice</h5><p class="clue">${q.feedback.clue}</p></div>
+          <div class="fb-section"><h5>↩ Contre-Modèle</h5><p class="counter">${q.feedback.counter}</p></div>
+        </div>
+      </div>
+      <button class="next-btn" id="qcm-next-btn" style="display:none" onclick="advanceQcm()">Question Suivante →</button>
     </div>
   `;
 }
 
-function evalQcm(idx, correct, key) {
-  if (document.querySelector('#qcm-question-area .disabled')) return;
-  document.querySelectorAll('#qcm-question-area .q-option').forEach(o => o.classList.add('disabled'));
-  const isCorrect = idx === correct;
-  recordAnswerMetrics(key, isCorrect);
+function evaluateQcmChoice(idx, correctIdx, skillKey) {
+  const opts = document.querySelectorAll('#qcm-question-area .q-option');
+  if ([...opts].some(o => o.classList.contains('disabled'))) return;
+
+  opts.forEach(o => o.classList.add('disabled'));
+  const isCorrect = idx === correctIdx;
+
+  recordAnswerMetrics(skillKey, isCorrect);
+
   document.getElementById(`qcm-opt-${idx}`).classList.add(isCorrect ? 'correct' : 'wrong');
-  if(!isCorrect) document.getElementById(`qcm-opt-${correct}`).classList.add('correct');
-  document.getElementById('qcm-fb').style.display = 'block';
-  document.getElementById('qcm-next').style.display = 'block';
+  if (!isCorrect) document.getElementById(`qcm-opt-${correctIdx}`).classList.add('correct');
+
+  const panel = document.getElementById('qcm-feedback-panel');
+  const status = document.getElementById('qcm-fb-status');
+  
+  panel.className = `feedback-panel show ${isCorrect ? 'correct-fb' : 'wrong-fb'}`;
+  status.innerHTML = isCorrect ? '<span class="fb-status c">✓ Concept Validé</span>' : '<span class="fb-status w">✗ Erreur d\'Interprétation</span>';
+  
+  document.getElementById('qcm-next-btn').style.display = 'block';
 }
+
+function advanceQcm() {
+  qcmIndex++;
+  renderQcm();
+}
+
+// ===================== SCÉNARIO EXPERT : EXAMEN NYLON =====================
 
 function renderNylonQuestion() {
   const area = document.getElementById('nylon-question-area');
-  if (!nylonStarted) { area.innerHTML = `<div style="text-align:center;padding:20px;color:var(--text3);">Système d'évaluation NyLon autonome en sommeil. Activez le déclencheur ci-dessus.</div>`; return; }
-  if (nylonIndex >= NYLON_QUESTIONS.length) { area.innerHTML = `<div style="text-align:center;color:var(--green);font-weight:700;">Évaluation validée. Vos structures sont ancrées.</div>`; return; }
+  if (!nylonStarted) {
+    area.innerHTML = `
+      <div style="text-align:center;padding:40px;color:var(--text2);">
+        <div style="font-size:32px;margin-bottom:16px;">✈</div>
+        <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:16px;color:var(--text);margin-bottom:8px;">Examen System Connecté localement</div>
+        <div style="font-size:13px; max-width:500px; margin: 0 auto;">Simulateur d'épreuve : 5 situations pro hautement techniques exigeant une précision d\'analyse absolue.</div>
+      </div>
+    `;
+    return;
+  }
+  
+  if (nylonIndex >= NYLON_QUESTIONS.length) {
+    concludeNylonExam();
+    return;
+  }
+
   const q = NYLON_QUESTIONS[nylonIndex];
+  document.getElementById('nylon-score').textContent = `${nylonScore}/${NYLON_QUESTIONS.length}`;
+
   area.innerHTML = `
     <div class="q-card">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--teal);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;">${q.context}</div>
       <div class="q-sentence">${q.sentence}</div>
-      <div class="q-options">${q.options.map((o, i) => `<div class="q-option" id="n-opt-${i}" onclick="evalNylon(${i},${q.correct},'${q.skillKey}')">${o}</div>`).join('')}</div>
-      <button class="next-btn" id="n-next" style="display:none" onclick="nylonIndex++; renderNylonQuestion();">Continuer →</button>
+      <div class="q-question">${q.question}</div>
+      <div class="q-options">
+        ${q.options.map((o, i) => `
+          <div class="q-option" id="nylon-opt-${i}" onclick="evaluateNylonChoice(${i}, ${q.correct}, '${q.skillKey}')">
+            <div class="opt-letter">${String.fromCharCode(65+i)}</div>
+            <div>${o}</div>
+          </div>
+        `).join('')}
+      </div>
+      <div class="feedback-panel" id="nylon-feedback-panel">
+        <div class="fb-header"><div class="fb-status" id="nylon-fb-status"></div></div>
+        <div class="fb-sections">
+          <div class="fb-section"><h5>📌 Axiome</h5><p class="rule">${q.feedback.rule}</p></div>
+          <div class="fb-section"><h5>🔍 Analyse Contextuelle</h5><p class="clue">${q.feedback.clue}</p></div>
+          <div class="fb-section"><h5>↩ Distracteur Éliminé</h5><p class="counter">${q.feedback.counter}</p></div>
+        </div>
+      </div>
+      <button class="next-btn" id="nylon-next-btn" style="display:none" onclick="advanceNylon()">Passer à l'interaction suivante →</button>
     </div>
   `;
 }
 
-function evalNylon(idx, correct, key) {
-  document.querySelectorAll('#nylon-question-area .q-option').forEach(o => o.classList.add('disabled'));
-  const isCorrect = idx === correct; if(isCorrect) nylonScore++;
-  recordAnswerMetrics(key, isCorrect);
-  document.getElementById(`n-opt-${idx}`).classList.add(isCorrect ? 'correct' : 'wrong');
-  document.getElementById('n-next').style.display = 'block';
+function evaluateNylonChoice(idx, correctIdx, skillKey) {
+  const opts = document.querySelectorAll('#nylon-question-area .q-option');
+  if ([...opts].some(o => o.classList.contains('disabled'))) return;
+
+  opts.forEach(o => o.classList.add('disabled'));
+  const isCorrect = idx === correctIdx;
+
+  if (isCorrect) nylonScore++;
+  recordAnswerMetrics(skillKey, isCorrect);
+
+  document.getElementById(`nylon-opt-${idx}`).classList.add(isCorrect ? 'correct' : 'wrong');
+  if (!isCorrect) document.getElementById(`nylon-opt-${correctIdx}`).classList.add('correct');
+
+  document.getElementById('nylon-score').textContent = `${nylonScore}/${NYLON_QUESTIONS.length}`;
+
+  const panel = document.getElementById('nylon-feedback-panel');
+  panel.className = `feedback-panel show ${isCorrect ? 'correct-fb' : 'wrong-fb'}`;
+  document.getElementById('nylon-fb-status').innerHTML = isCorrect ? '<span class="fb-status c">✓ Cohérence Validée</span>' : '<span class="fb-status w">✗ Incohérence Majeure</span>';
+  
+  document.getElementById('nylon-next-btn').style.display = 'block';
 }
 
-function startNylon() { nylonStarted = true; nylonIndex = 0; nylonScore = 0; document.getElementById('nylon-start-btn').style.display = 'none'; document.getElementById('nylon-stop-btn').style.display = 'inline-block'; renderNylonQuestion(); }
-function stopNylon() { nylonStarted = false; document.getElementById('nylon-start-btn').style.display = 'inline-block'; document.getElementById('nylon-stop-btn').style.display = 'none'; renderNylonQuestion(); }
+function advanceNylon() {
+  nylonIndex++;
+  renderNylonQuestion();
+}
+
+function startNylon() {
+  nylonStarted = true;
+  nylonIndex = 0;
+  nylonScore = 0;
+  nylonTimeLeft = 900;
+  document.getElementById('nylon-start-btn').style.display = 'none';
+  document.getElementById('nylon-stop-btn').style.display = 'inline-block';
+  nylonTimer = setInterval(() => {
+    nylonTimeLeft--;
+    const min = Math.floor(nylonTimeLeft / 60);
+    const sec = nylonTimeLeft % 60;
+    document.getElementById('nylon-timer').textContent = `${String(min).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
+    if (nylonTimeLeft <= 0) concludeNylonExam();
+  }, 1000);
+  renderNylonQuestion();
+}
+
+function stopNylon() {
+  clearInterval(nylonTimer);
+  nylonStarted = false;
+  document.getElementById('nylon-start-btn').style.display = 'inline-block';
+  document.getElementById('nylon-stop-btn').style.display = 'none';
+  renderNylonQuestion();
+}
+
+function concludeNylonExam() {
+  clearInterval(nylonTimer);
+  document.getElementById('nylon-stop-btn').style.display = 'none';
+  document.getElementById('nylon-start-btn').style.display = 'inline-block';
+  document.getElementById('nylon-start-btn').textContent = '↺ Relancer l\'Évaluation';
+  nylonStarted = false;
+
+  const finalPct = Math.round((nylonScore / NYLON_QUESTIONS.length) * 100);
+  const colorClass = finalPct >= 75 ? 'var(--green)' : finalPct >= 50 ? 'var(--yellow)' : 'var(--red)';
+
+  document.getElementById('nylon-question-area').innerHTML = `
+    <div style="text-align:center;padding:40px;background:var(--bg3);border:1px solid var(--border);border-radius:14px;">
+      <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:42px;color:${colorClass};margin-bottom:8px;">${finalPct}%</div>
+      <div style="font-size:14px;color:var(--text);margin-bottom:4px;font-weight:600;">Validation : ${nylonScore} / ${NYLON_QUESTIONS.length} réponses exactes</div>
+      <div style="font-size:12px;color:var(--text2); max-width:400px; margin:0 auto;">${finalPct >= 75 ? 'Excellente vision des structures théoriques. Prêt pour l\'épreuve.' : 'Des failles de détection subsistent. Activez le Panic Mode.'}</div>
+    </div>
+  `;
+}
+
+// ===================== RADAR COMPÉTACHART (GÉNÉRATEUR CANVAS DYNAMIQUE) =====================
 
 function renderRadar() {
-  const canvas = document.getElementById('radar-canvas'); if (!canvas) return;
-  const ctx = canvas.getContext('2d'); ctx.clearRect(0,0,340,320);
-  ctx.fillStyle = 'rgba(79,140,255,0.2)'; ctx.beginPath(); ctx.arc(170,160,80,0,Math.PI*2); ctx.fill();
+  drawDynamicRadar();
   const list = document.getElementById('radar-skills-list');
-  list.innerHTML = Object.keys(COMPETENCE_KEYS).map(k => `<div class="skill-row"><div class="skill-name">${COMPETENCE_KEYS[k]}</div><div class="skill-bar-wrap"><div class="skill-bar" style="width:${getSkillPercentage(k)}%;background:var(--accent)"></div></div></div>`).join('');
+  list.innerHTML = Object.keys(COMPETENCE_KEYS).map(key => {
+    const pct = getSkillPercentage(key);
+    // Couleurs distinctives par branche
+    const colors = { aspect_accompli: '#ff4f6e', precision_spatiotemporelle: '#22d87a', aspect_progressif: '#f5c842', morphologie_verbale: '#2adab1', nuance_pp_ppc: '#7b5fff', detection_marqueurs: '#ff8c42' };
+    return `
+      <div class="skill-row">
+        <div class="skill-name">${COMPETENCE_KEYS[key]}</div>
+        <div class="skill-bar-wrap"><div class="skill-bar" style="width:${pct}%;background:${colors[key]}"></div></div>
+        <div class="skill-pct" style="color:${colors[key]}">${pct}%</div>
+      </div>
+    `;
+  }).join('');
 }
 
-function openPanic() { document.getElementById('panic-overlay').classList.add('show'); microIndex = 0; loadMicroQ(); }
-function closePanic() { document.getElementById('panic-overlay').classList.remove('show'); }
-function loadMicroQ() {
-  if (microIndex >= MICRO_QCM.length) { document.getElementById('micro-q-text').textContent = "Diagnostic d'urgence achevé."; return; }
+function drawDynamicRadar() {
+  const canvas = document.getElementById('radar-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const cx = 170, cy = 160, maxRadius = 110;
+  const keys = Object.keys(COMPETENCE_KEYS);
+  const n = keys.length;
+  
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // Tracé de la grille concentric
+  for (let l = 1; l <= 5; l++) {
+    ctx.beginPath();
+    for (let i = 0; i < n; i++) {
+      const angle = (Math.PI * 2 * i / n) - Math.PI / 2;
+      const currRadius = maxRadius * l / 5;
+      const x = cx + currRadius * Math.cos(angle);
+      const y = cy + currRadius * Math.sin(angle);
+      i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    }
+    ctx.closePath();
+    ctx.strokeStyle = '#1e2230';
+    ctx.stroke();
+  }
+
+  // Axes polygonaux
+  ctx.strokeStyle = '#1e2230';
+  for (let i = 0; i < n; i++) {
+    const angle = (Math.PI * 2 * i / n) - Math.PI / 2;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(cx + maxRadius * Math.cos(angle), cy + maxRadius * Math.sin(angle));
+    ctx.stroke();
+  }
+
+  // Extraction et polygone de données réelles du cache
+  ctx.beginPath();
+  for (let i = 0; i < n; i++) {
+    const angle = (Math.PI * 2 * i / n) - Math.PI / 2;
+    const factor = getSkillPercentage(keys[i]) / 100;
+    const x = cx + maxRadius * factor * Math.cos(angle);
+    const y = cy + maxRadius * factor * Math.sin(angle);
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  }
+  ctx.closePath();
+  ctx.fillStyle = 'rgba(79,140,255,0.15)';
+  ctx.fill();
+  ctx.strokeStyle = '#4f8cff';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+
+  // Noeuds colorés et étiquettes
+  const shortLabels = ['Bilan (PP)', 'In/On/At', 'Past Cont.', 'Morpho', 'PP/PPC', 'Marqueurs'];
+  for (let i = 0; i < n; i++) {
+    const angle = (Math.PI * 2 * i / n) - Math.PI / 2;
+    const factor = getSkillPercentage(keys[i]) / 100;
+    const x = cx + maxRadius * factor * Math.cos(angle);
+    const y = cy + maxRadius * factor * Math.sin(angle);
+    
+    ctx.beginPath();
+    ctx.arc(x, y, 4, 0, Math.PI * 2);
+    ctx.fillStyle = '#4f8cff';
+    ctx.fill();
+
+    // Rendu texte des labels
+    const lx = cx + (maxRadius + 18) * Math.cos(angle);
+    const ly = cy + (maxRadius + 12) * Math.sin(angle);
+    ctx.fillStyle = '#8a90a8';
+    ctx.font = '10px JetBrains Mono';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(shortLabels[i], lx, ly);
+  }
+}
+
+// ===================== PANIC MODE HIGH INTENSITY FUNCTIONALITIES =====================
+
+function openPanic() {
+  document.getElementById('panic-overlay').classList.add('show');
+  
+  // Rendu immédiat des règles fondamentales
+  document.getElementById('rules-grid').innerHTML = RULES_GOLD.map(r => `
+    <div class="rule-card">
+      <div class="rule-num">Axiome #${r.num}</div>
+      <div class="rule-text">${r.text}</div>
+      <div class="rule-ex">
+        <span class="ok">${r.ex_ok}</span><br>
+        <span class="no">${r.ex_no}</span>
+      </div>
+    </div>
+  `).join('');
+
+  microIndex = 0;
+  loadMicroQuestion();
+}
+
+function closePanic() {
+  document.getElementById('panic-overlay').classList.remove('show');
+  updateDashboardDOM();
+}
+
+function loadMicroQuestion() {
+  if (microIndex >= MICRO_QCM.length) {
+    document.getElementById('micro-counter').textContent = "Terminé";
+    document.getElementById('micro-q-text').textContent = "Tous les verrous de secours ont été passés en revue. Votre cache local est consolidé.";
+    document.getElementById('micro-opts').innerHTML = "";
+    document.getElementById('micro-next').style.display = 'none';
+    return;
+  }
+
   const q = MICRO_QCM[microIndex];
+  document.getElementById('micro-counter').textContent = `Question Instantanée ${microIndex + 1} / ${MICRO_QCM.length}`;
   document.getElementById('micro-q-text').textContent = q.q;
-  document.getElementById('micro-opts').innerHTML = q.opts.map((o,i) => `<div class="micro-opt" id="m-o-${i}" onclick="evalMicro(${i},${q.correct},'${q.key}')">${o}</div>`).join('');
-}
-function evalMicro(idx, correct, key) {
-  const isCorrect = idx === correct; recordAnswerMetrics(key, isCorrect);
-  document.getElementById(`m-o-${idx}`).classList.add(isCorrect ? 'correct' : 'wrong');
-  setTimeout(() => { microIndex++; loadMicroQ(); }, 1200);
+  
+  document.getElementById('micro-opts').innerHTML = q.opts.map((o, idx) => `
+    <div class="micro-opt" id="micro-opt-${idx}" onclick="submitMicroChoice(${idx}, ${q.correct}, '${q.key}')">${o}</div>
+  `).join('');
+  
+  document.getElementById('micro-next').style.display = 'none';
 }
 
-document.addEventListener('DOMContentLoaded', () => { initLocalStorageState(); renderTimeline(); renderQcm(); });
+function submitMicroChoice(idx, correctIdx, skillKey) {
+  const opts = document.querySelectorAll('.micro-opt');
+  if([...opts].some(o => o.classList.contains('disabled'))) return;
+
+  opts.forEach(o => o.classList.add('disabled'));
+  const isCorrect = idx === correctIdx;
+
+  recordAnswerMetrics(skillKey, isCorrect);
+
+  document.getElementById(`micro-opt-${idx}`).classList.add(isCorrect ? 'correct' : 'wrong');
+  if(!isCorrect) document.getElementById(`micro-opt-${correctIdx}`).classList.add('correct');
+
+  document.getElementById('micro-next').style.display = 'block';
+}
+
+function nextMicroQ() {
+  microIndex++;
+  loadMicroQuestion();
+}
+
+// Initialisation au chargement de l'arbre DOM
+document.addEventListener('DOMContentLoaded', () => {
+  initLocalStorageState();
+  renderTimeline();
+  renderQcm();
+});
 </script>
 </body>
 </html>
