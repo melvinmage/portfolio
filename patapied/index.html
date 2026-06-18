@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation Technique — Patapied</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&family=Space+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <style>
+        /* Surcharge spécifique pour adapter l'affichage du rapport au main.css du site */
+        body { background: var(--cream); color: var(--ink); }
+        .tech-container { max-width: var(--max-w); margin: 40px auto; padding: 0 1.25rem; }
+        .tech-header { margin-bottom: 40px; border-bottom: 2px solid var(--ink); padding-bottom: 20px; }
+        .tech-section { margin-bottom: 48px; }
+        .tech-section h2 { font-family: var(--font-serif); font-weight: 700; color: var(--ink); margin-bottom: 20px; font-size: 1.8rem; }
+        .tech-section h3 { font-family: var(--font-sans); font-weight: 600; color: var(--forest); margin-top: 24px; margin-bottom: 12px; font-size: 1.2rem; }
+        .tech-section p { font-family: var(--font-sans); line-height: 1.8; color: var(--ink-mid); margin-bottom: 16px; font-size: 0.95rem; }
+        .tech-section strong { color: var(--ink); }
+        .tech-code { font-family: var(--font-mono); background-color: var(--cream-dark); padding: 2px 6px; border-radius: var(--radius-sm); color: var(--forest-dark); font-size: 0.88rem; }
+        
+        /* Composants de gestion des captures d'écran et analyses */
+        .tech-image-box { margin: 32px 0; background: var(--white); border: 1px solid var(--cream-dark); border-radius: var(--radius-lg); padding: 24px; text-align: center; box-shadow: var(--shadow-sm); }
+        .tech-image-box img { max-width: 100%; height: auto; border-radius: var(--radius-md); border: 1px solid var(--cream-dark); box-shadow: var(--shadow-sm); margin: 0 auto; }
+        .tech-image-caption { font-family: var(--font-sans); font-weight: 600; font-size: 0.9rem; color: var(--ink); margin-top: 16px; margin-bottom: 8px; text-align: center; }
+        .tech-image-analysis { font-family: var(--font-sans); font-size: 0.88rem; color: var(--ink-light); line-height: 1.6; text-align: left; background: var(--white); padding: 16px; border-left: 4px solid var(--forest); border-radius: 0 var(--radius-md) var(--radius-md) 0; margin-top: 12px; }
+        .tech-img-block { display: block; max-width: 100%; height: auto; margin: 24px auto; border-radius: var(--radius-md); border: 1px solid var(--cream-dark); box-shadow: var(--shadow-sm); }
+        .tech-caption { display: block; font-family: var(--font-sans); font-size: 0.88rem; font-weight: 600; color: var(--ink-light); text-align: center; margin-top: -12px; margin-bottom: 28px; }
+
+        /* Navigation par Onglets (S'intègre dans le style global .subnav) */
+        .subnav-report { display: flex; flex-wrap: wrap; gap: 6px; background: var(--white); padding: 6px; border-radius: var(--radius-lg); border: 1px solid var(--cream-dark); margin-bottom: 32px; box-shadow: var(--shadow-sm); }
+        .subnav-report__btn { background: transparent; border: none; padding: 10px 18px; font-family: var(--font-sans); font-weight: 600; font-size: 0.85rem; color: var(--ink-light); border-radius: var(--radius-md); cursor: pointer; transition: all 0.15s ease; }
+        .subnav-report__btn:hover { color: var(--ink); background: var(--cream-dark); }
+        .subnav-report__btn.active { background: var(--forest); color: var(--white); }
+        .tech-tab-content { display: none; }
+        .tech-tab-content.active { display: block; }
+
+        /* Conteneurs d'invites de commandes et d'éditeurs fictifs (CLI / Windows) */
+        .tech-pre { font-family: var(--font-mono); background-color: var(--white); border: 1px solid var(--cream-dark); padding: 16px; border-radius: var(--radius-md); overflow-x: auto; font-size: 0.85rem; line-height: 1.5; color: var(--ink); margin-bottom: 20px; text-align: left; }
+        .terminal { margin: 24px 0; background: #1E1E24; border-radius: var(--radius-md); box-shadow: var(--shadow-md); overflow: hidden; }
+        .terminal__header { background: #17171C; padding: 10px 16px; display: flex; align-items: center; }
+        .terminal__dot { width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; display: inline-block; }
+        .terminal__body { padding: 14px; font-family: var(--font-mono); font-size: 0.82rem; line-height: 1.5; color: #F7F5F0; text-align: left; overflow-x: auto; white-space: pre; }
+        .window-mock { background: #0f141c; border: 1px solid #232e3e; border-radius: 6px; box-shadow: var(--shadow-md); text-align: left; overflow: hidden; margin: 24px auto; max-width: 100%; }
+        .window-header { background: #171d26; padding: 10px 16px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid #232e3e; }
+        .window-dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+        .dot-close { background: #ff5f56; }
+        .window-title { color: #a8b2c1; font-family: var(--font-mono); font-size: 0.75rem; margin-left: auto; margin-right: auto; padding-right: 36px; }
+        .window-body { padding: 18px; font-family: var(--font-mono); font-size: 0.85rem; line-height: 1.6; color: #e2e8f0; white-space: pre-wrap; overflow-x: auto; }
+        
+        /* Simulations d'éditeurs textuels (GNU Nano) */
+        .nano-mock { background: #000000; color: #ffffff; font-family: var(--font-mono); font-size: 0.85rem; padding: 12px; border-radius: 4px; border: 1px solid #333; text-align: left; box-shadow: var(--shadow-md); }
+        .nano-header { background: #ffffff; color: #000000; padding: 2px 8px; font-weight: bold; display: flex; justify-content: space-between; font-size: 0.8rem; }
+        .nano-body { padding: 14px 0; line-height: 1.5; min-height: 120px; color: #ffffff; white-space: pre-wrap; }
+        .nano-footer { border-top: 1px solid #333; padding-top: 8px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; font-size: 0.75rem; color: #00ffff; }
+        .nano-cmd { color: #ffffff; font-weight: bold; }
+
+        /* Conteneur générique englobant n'importe quel mock de console + sa légende */
+        .tech-screenshot-box { margin: 24px 0; }
+        .tech-screenshot-box .tech-image-caption { margin-top: 12px; }
+
+        /* Simulation d'invite Debconf / TUI */
+        .tui-mock { background: #0c2340; color: #d6e4f0; font-family: var(--font-mono); font-size: 0.85rem; border-radius: 6px; border: 1px solid #1c3d63; box-shadow: var(--shadow-md); text-align: left; overflow: hidden; }
+        .tui-title { background: #d6e4f0; color: #0c2340; font-weight: bold; padding: 4px 10px; font-size: 0.78rem; }
+        .tui-box { padding: 16px; white-space: pre-wrap; line-height: 1.6; min-height: 80px; }
+        .tui-selected { color: #50fa7b; font-weight: bold; }
+        .tui-buttons { display: flex; gap: 12px; justify-content: center; padding: 10px 0 16px; }
+        .tui-btn { border: 1px solid #d6e4f0; padding: 4px 18px; border-radius: 3px; font-size: 0.8rem; }
+        .tui-btn-active { background: #d6e4f0; color: #0c2340; font-weight: bold; }
+
+        /* Couleurs d'accentuation pour les invites (Prompts CLI) */
+        .term-green { color: #50fa7b; }
+        .term-red { color: #ff5556; }
+        .prompt-root { color: #ff5555; font-weight: bold; }
+        .prompt-loc { color: #50fa7b; font-weight: bold; }
+        .prompt-cmd { color: #f1fa8c; }
+        .prompt-sql { color: #bd93f9; font-weight: bold; }
+        .comment { color: #64748b; font-style: italic; }
+        
+        /* Tableaux de recette fonctionnelle */
+        .report-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--cream-dark); background: var(--white); margin: 24px 0; }
+        .report-table th, .report-table td { padding: 0.7rem 1rem; text-align: left; border-bottom: 1px solid var(--cream-dark); }
+        .report-table th { background: var(--cream-dark); font-weight: 700; font-size: 0.72rem; text-transform: uppercase; letter-spacing: .06em; color: var(--ink); }
+        .report-table tbody tr:hover { background: var(--cream); }
+        .badge-success-report { background-color: var(--forest); color: var(--white); padding: 4px 8px; border-radius: var(--radius-sm); font-size: 0.75rem; font-weight: bold; }
+
+        /* PAGE DE GARDE — INTRO */
+        .t-label { font-family: var(--font-sans); font-weight: 700; font-size: 0.72rem; text-transform: uppercase; letter-spacing: .08em; color: var(--forest-mid); }
+        .sae-hero { background: var(--forest-dark); border-radius: var(--radius-lg); padding: 56px 40px; margin-bottom: 56px; box-shadow: var(--shadow-lg); }
+        .sae-hero .t-label { color: var(--forest-pale); opacity: .85; }
+        .sae-hero h1 { font-family: var(--font-serif); font-weight: 400; color: var(--white); font-size: clamp(1.9rem, 4vw, 2.6rem); line-height: 1.25; max-width: 700px; margin-bottom: 18px; }
+        .sae-hero > p { font-family: var(--font-sans); color: rgba(255,255,255,.62); max-width: 620px; font-size: 1rem; line-height: 1.8; margin-bottom: 28px; }
+        .sae-hero-badges { display: flex; gap: 10px; flex-wrap: wrap; }
+        .sae-hero-badge { font-family: var(--font-sans); background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.18); border-radius: var(--radius-pill); padding: 8px 16px; font-size: .8rem; color: rgba(255,255,255,.85); }
+        .sae-hero-badge--accent { background: rgba(216,243,220,.16); border-color: var(--forest-pale); color: var(--forest-pale); font-weight: 600; }
+
+        .vlan-id-chip { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-weight: 700; color: var(--ink); }
+        .vlan-id-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+
+        .status-pill { display: inline-block; font-family: var(--font-sans); font-size: .72rem; font-weight: 700; padding: 4px 10px; border-radius: var(--radius-pill); }
+        .status-pill--info { background: #eff6ff; color: #1d4ed8; }
+        .status-pill--warning { background: #fff7ed; color: #92400e; }
+        .status-pill--active { background: var(--forest-pale); color: var(--forest-dark); }
+
+        .role-card .role-avatar { margin-bottom: 14px; }
+        img.role-avatar { width: 100%; max-width: 220px; height: 220px; aspect-ratio: 1 / 1; object-fit: cover; display: block; margin: 0 auto 14px; border-radius: 50%; border: 3px solid var(--cream-dark); }
+        .role-card { text-align: center; }
+        .role-card ul { text-align: left; }
+        .role-card .role-name { font-family: var(--font-sans); font-weight: 700; font-size: 1rem; color: var(--ink); margin-bottom: 2px; }
+        .role-card .role-title { font-family: var(--font-sans); font-size: .76rem; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: var(--forest-mid); margin-bottom: 14px; }
+
+        .sae-grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--gap-lg); }
+        .sae-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gap-xl); }
+        .sae-intro-block { margin-bottom: 56px; }
+
+        /* Sélecteur de catégorie compact */
+        .nav-dropdown-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            background: var(--white);
+            padding: 8px 16px;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--cream-dark);
+            margin-bottom: 32px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .nav-dropdown__arrow {
+            background: var(--cream);
+            border: 1px solid var(--cream-dark);
+            color: var(--forest);
+            font-size: 1rem;
+            width: 36px;
+            height: 36px;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.15s ease;
+            user-select: none;
+        }
+
+        .nav-dropdown__arrow:hover {
+            background: var(--forest);
+            color: var(--white);
+            border-color: var(--forest);
+        }
+
+        .nav-dropdown__select {
+            flex: 1;
+            max-width: 400px;
+            height: 40px;
+            padding: 0 16px;
+            font-family: var(--font-sans);
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--ink);
+            background: var(--white);
+            border: 1px solid var(--cream-dark);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            outline: none;
+            transition: border-color 0.15s ease;
+        }
+
+        .nav-dropdown__select:focus {
+            border-color: var(--forest);
+        }
+
+        @media (max-width: 760px) {
+            .sae-hero { padding: 36px 24px; }
+            .roles-grid, .sae-grid-3 { grid-template-columns: 1fr !important; }
+            .sae-grid-2 { grid-template-columns: 1fr !important; }
+        }
+    </style>
+</head>
+<body class="lang-fr">
+
+    <div class="sae-hero" style="max-width: var(--max-w); margin-left: auto; margin-right: auto; margin-top: 40px;">
+        <div class="container">
+            <p class="t-label" style="margin-bottom:16px;">BUT R&amp;T — 1ère Année — 2026</p>
+            <h1>SAÉ 2.04 — Projet Intégratif</h1>
+            <div class="sae-hero-badges">
+                <div class="sae-hero-badge">👤 JOSSERAND Andreas</div>
+                <div class="sae-hero-badge">👤 JOYEUX Gabriel</div>
+                <div class="sae-hero-badge">👤 MAGE Melvin</div>
+                <div class="sae-hero-badge sae-hero-badge--accent">🏫 Université Clermont Auvergne</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" style="margin-bottom: 64px; max-width: var(--max-w); margin-left: auto; margin-right: auto; padding: 0 20px;">
+        <div class="sae-intro-block">
+            <p class="t-label" style="margin-bottom:8px;">Architecture Réseau</p>
+            <h2 style="font-family:var(--font-serif); font-size:1.8rem; margin-bottom:24px; font-weight:700;">Segmentation VLAN</h2>
+            <div class="vlan-table-wrap">
+                <table class="report-table">
+                    <thead>
+                        <tr><th>VLAN</th><th>Nom</th><th>Sous-réseau</th><th>Attribution</th><th>Description</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="vlan-id-chip"><span class="vlan-id-dot" style="background:#E63946;"></span>10</span></td>
+                            <td><span class="vlan-tag vlan-10">FIN_NET</span></td>
+                            <td><code>192.168.10.0/24</code></td>
+                            <td><span class="status-pill status-pill--info">DHCP</span></td>
+                            <td style="font-size:.82rem;color:var(--ink-mid);">Finance — Isolation inter-VLAN par ACL. Accès Internet restreint aux passerelles bancaires.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="vlan-id-chip"><span class="vlan-id-dot" style="background:#00A896;"></span>20</span></td>
+                            <td><span class="vlan-tag vlan-20">HR_STAFF</span></td>
+                            <td><code>192.168.20.0/24</code></td>
+                            <td><span class="status-pill status-pill--info">DHCP</span></td>
+                            <td style="font-size:.82rem;color:var(--ink-mid);">RH &amp; Wi-Fi Interne — Accès contrôlé vers l'annuaire Active Directory.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="vlan-id-chip"><span class="vlan-id-dot" style="background:#F59E0B;"></span>30</span></td>
+                            <td><span class="vlan-tag vlan-30">TECH_NET</span></td>
+                            <td><code>192.168.30.0/24</code></td>
+                            <td><span class="status-pill status-pill--warning">Statique</span></td>
+                            <td style="font-size:.82rem;color:var(--ink-mid);">Zone Serveurs &amp; SOC — Cœur SI. Administration SSH interdite hors zone.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="vlan-id-chip"><span class="vlan-id-dot" style="background:#6B7280;"></span>40</span></td>
+                            <td><span class="vlan-tag vlan-40">WIFI_GUEST</span></td>
+                            <td><code>192.168.40.0/24</code></td>
+                            <td><span class="status-pill status-pill--info">DHCP</span></td>
+                            <td style="font-size:.82rem;color:var(--ink-mid);">Clients Showroom — Internet-Only. Isolation L2 stricte inter-clients.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="sae-intro-block">
+            <p class="t-label" style="margin-bottom:8px;">Cabinet JJM</p>
+            <h2 style="font-family:var(--font-serif); font-size:1.8rem; margin-bottom:24px; font-weight:700;">Répartition des Rôles</h2>
+            <div class="sae-grid-3 roles-grid">
+                <div class="sec-card role-card">
+                    <img class="role-avatar" src="images/team/melvin-mage.png" alt="Photo de Melvin MAGE">
+                    <div class="role-name">Melvin MAGE</div>
+                    <div class="role-title">Réseau &amp; Active Directory</div>
+                    <ul>
+                        <li>Configuration Routeur et Switch (Inter-VLAN, Sécurisation)</li>
+                        <li>Contrôleur de Domaine Active Directory (AD-DS)</li>
+                        <li>Gestion et distribution du service DHCP</li>
+                        <li>Support sur l'infrastructure du site Web</li>
+                    </ul>
+                </div>
+                <div class="sec-card role-card">
+                    <img class="role-avatar" src="images/team/andreas-josserand.png" alt="Photo d'Andréas JOSSERAND">
+                    <div class="role-name">Andréas JOSSERAND</div>
+                    <div class="role-title">Systèmes Linux &amp; Web</div>
+                    <ul>
+                        <li>Stack LAMP (Serveur Apache2, PHP 8.4, phpMyAdmin)</li>
+                        <li>Base de données MySQL / MariaDB</li>
+                        <li>Sécurisation du système Linux et gestion des droits</li>
+                        <li>Développement de l'application e-commerce bilingue</li>
+                    </ul>
+                </div>
+                <div class="sec-card role-card">
+                    <img class="role-avatar" src="images/team/gabriel-joyeux.jpg" alt="Photo de Gabriel JOYEUX">
+                    <div class="role-name">Gabriel JOYEUX</div>
+                    <div class="role-title">Téléphonie &amp; Sauvegarde</div>
+                    <ul>
+                        <li>Serveur IP-PBX VoIP Asterisk (SIP/RTP)</li>
+                        <li>Politique de sauvegarde automatique (Scripts &amp; Cron)</li>
+                        <li>Sonde de détection anti-brute-force (SOC)</li>
+                        <li>Analyse des logs et interconnexion inter-îlots</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tech-container">
+        <header class="tech-header">
+            <h1 style="font-family: var(--font-serif); font-weight: 800; font-size: 2.5rem; color: var(--ink); margin-top: 8px;">Documentation Technique</h1>
+            <p style="font-family: var(--font-sans); color: var(--ink-light); margin-top: 8px; font-size: 0.95rem;">Projet SAÉ 2.04 — Conception et Déploiement d'une Infrastructure Réseau et Système Sécurisée — Société Patapied</p>
+        </header>
+
+        <div class="nav-dropdown-wrapper">
+            <button class="nav-dropdown__arrow" onclick="moveTab(-1)" title="Catégorie précédente">◀</button>
+            <select id="tech-tab-selector" class="nav-dropdown__select" onchange="switchTechTab(this.value)">
+                <option value="ad" selected>👤 Active Directory</option>
+                <option value="router">🔒 Routeur Cisco</option>
+                <option value="switch">🔒 Switch Cisco</option>
+                <option value="wifi">📡 AP Wi-Fi</option>
+                <option value="lamp">🗄️ Serveur Web</option>
+                <option value="stormshield">🛡️ Pare-feu Stormshield</option>
+                <option value="voip">📞 Téléphonie Asterisk</option>
+                <option value="voip-en">📞 Téléphonie Asterisk (English version)</option>
+                <option value="soc">🛡️ SOC &amp; Supervision</option>
+                <option value="samba">📂 Stockage Collaboratif</option>
+                <option value="sauvegarde">💾 Sauvegardes Centralisées</option>
+            </select>
+            <button class="nav-dropdown__arrow" onclick="moveTab(1)" title="Catégorie suivante">▶</button>
+        </div>
+
+        <div id="tech-tab-ad" class="tech-tab-content active">
+            <section class="tech-section product-card" style="padding: 32px; margin-bottom: 32px; background: var(--white);">
+                <h2>1. Introduction et Choix Stratégique de l'Architecture</h2>
+                <p>Pour accompagner le déploiement du nouveau siège social de la société <strong>Patapied</strong>, la mise en place d'un système de gestion unifiée des identités et des accès était une priorité critique. Notre choix s'est porté sur un contrôleur de domaine sous Windows Server 2022 afin de structurer l'annuaire de l'entreprise, de centraliser l'authentification et de manager le parc de machines de manière centralisée.</p>
+                <h3>La genèse du service DHCP : Un retour d'expérience constructif</h3>
+                <p>Au tout début du projet, notre équipe avait opté pour une approche modulaire et open-source : le service DHCP avait été intégralement configuré et mis en production sur notre serveur Linux Debian. L'objectif d'origine était d'isoler les rôles réseau et de ne pas surcharger le contrôleur de domaine Windows.</p>
+                <p>Cependant, lors de la phase de qualification et de raccordement des premiers postes clients, nous avons été confrontés à une barrière d'interopérabilité majeure : <strong>le couplage entre l'attribution d'adresses IP et la mise à jour dynamique du DNS (DDNS)</strong>. Les machines clientes du domaine (notamment les postes Windows) recevaient bien une configuration IP de la part de la Debian, mais leurs noms d'hotes ne s'enregistraient pas au sein de la zone DNS gérée par Active Directory. Cela provoquait des ruptures de résolution de noms, empêchant les machines de localiser correctement le contrôleur de domaine.</p>
+                <p>Après plusieurs tentatives infructueuses de scripts d'interopérabilité et de clés de mise à jour sécurisée (TSIG) entre ISC-DHCP-Server (Debian) et le DNS Microsoft, nous avons pris une décision d'ingénierie pragmatique et stratégique : <strong>abandonner le DHCP sur la Debian pour centraliser l'intégralité des étendues d'adressage directement sur le serveur Windows Server 2022</strong>. Ce pivot architectural a immédiatement fluidifié les opérations en permettant au rôle DHCP Microsoft de mettre à jour nativement, de manière dynamique et hautement sécurisée, les pointeurs DNS de l'Active Directory. Ce choix a grandement simplifié la supervision du réseau et consolidé la robustesse du domaine <span class="tech-code">patapied.local</span>.</p>
+            </section>
+
+            <section class="tech-section product-card" style="padding: 32px; margin-bottom: 32px; background: var(--white);">
+                <h2>2. Déploiement, Structuration et Configurations Systèmes</h2>
+                <h3>A. Ancrage Réseau du Contrôleur de Domaine</h3>
+                <p>Avant d'initier la promotion du serveur en tant que contrôleur de domaine, l'ancrage réseau de la machine devait être parfait. Nous lui avons attribué l'adresse fixe <span class="tech-code">192.168.30.20</span> sur le sous-réseau d'infrastructure et l'avons nommé <span class="tech-code">SRV-AD-PATAPIED</span>.</p>
+                <div class="tech-image-box">
+                    <img src="images/figure_ad_1.png" alt="Configuration IP Statique Windows Server">
+                    <p class="tech-image-caption">Figure 1 : Configuration réseau statique du contrôleur de domaine</p>
+                    <p class="tech-image-analysis">Cette image valide la couche réseau fondamentale de notre contrôleur de domaine Windows. On y observe la fixation de son adresse IP statique (<span class="tech-code">192.168.30.20</span>), de son masque en classe C ainsi que de sa passerelle par défaut. La configuration du DNS préféré sur la boucle locale (<span class="tech-code">127.0.0.1</span>) prouve l'autonomie du serveur, qui doit impérativement interroger ses propres services pour résoudre les requêtes de l'annuaire Active Directory.</p>
+                </div>
+
+                <h3>B. Structuration Logique de l'Annuaire (Gouvernance)</h3>
+                <p>Une fois le rôle AD-DS promu, nous avons conçu une arborescence d'Unités Organisationnelles (UO) pour coller au cahier des charges de Patapied et préparer l'application de règles de sécurité ciblées.</p>
+                <div class="tech-image-box">
+                    <img src="images/figure_ad_2.png" alt="Console Active Directory">
+                    <p class="tech-image-caption">Figure 2 : Segmentation de l'annuaire via les Unités Organisationnelles (UO)</p>
+                    <p class="tech-image-analysis">La console <span class="tech-code">dsa.msc</span> atteste de la bonne mise en place de notre gouvernance d'annuaire. À la racine du domaine <span class="tech-code">patapied.local</span>, les quatre UO cibles requises par le client sont isolées et prêtes à l'emploi : <code>OU_Finance</code>, <code>OU_Postes_Nomades</code>, <code>OU_RH</code>, et <code>OU_Technique</code>. Ce cloisonnement logique permettra d'appliquer des objets de stratégie de groupe (GPO) distincts par département métier.</p>
+                </div>
+
+                <h3>C. Centralisation et Configuration des Étendues DHCP</h3>
+                <div class="tech-image-box">
+                    <img src="images/figure_ad_3.png" alt="Console DHCP">
+                    <p class="tech-image-caption">Figure 3 : Console DHCP Windows et segmentation des étendues par VLAN</p>
+                    <p class="tech-image-analysis">Cette capture d'écran confirme l'activation complète du service DHCP centralisé sous Windows. Les quatre étendues correspondant à nos sous-réseaux logiques (VLAN_10, VLAN_20, VLAN_30 et VLAN_40) affichent toutes le statut <strong>Actif</strong>. Le serveur gère désormais la distribution des baux IP pour l'ensemble de la société.</p>
+                </div>
+
+                <h3>D. Durcissement de l'Infrastructure par Stratégie de Groupe (GPO)</h3>
+                <div class="tech-image-box">
+                    <img src="images/figure_ad_5.png" alt="Éditeur des GPO">
+                    <p class="tech-image-caption">Figure 4 : Éditeur de stratégie du domaine (Default Domain Policy)</p>
+                    <p class="tech-image-analysis">Cette capture d'écran de l'éditeur de GPO montre les paramètres de sécurité appliqués. On y distingue clairement l'activation des exigences de complexité des mots de passe, la fixation de la <strong>longueur minimale à 12 caractères</strong>, ainsi que la configuration du verrouillage des comptes configuré à 5 tentatives d'ouverture de session incorrectes pendant une durée de 5 minutes.</p>
+                </div>
+            </section>
+
+            <section class="tech-section product-card" style="padding: 32px; margin-bottom: 32px; background: var(--white);">
+                <h2>3. Validation Fonctionnelle et Recette de l'Infrastructure (Tests)</h2>
+                <h3>A. Validation de la chaîne d'attribution DHCP côté client</h3>
+                <div class="tech-image-box">
+                    <img src="images/figure_ad_6.png" alt="Résultat ipconfig">
+                    <p class="tech-image-caption">Figure 5 : Analyse du bail réseau obtenu sous Windows Client via ipconfig</p>
+                    <p class="tech-image-analysis">Le diagnostic <span class="tech-code">ipconfig /all</span> exécuté sur le client confirme le succès de l'architecture. La machine a bien reçu le suffixe DNS <span class="tech-code">patapied.local</span> et s'est vu attribuer l'adresse IP <span class="tech-code">192.168.10.50</span>. On constate surtout que la ligne "Serveur DHCP" identifie formellement notre contrôleur de domaine (<span class="tech-code">192.168.30.20</span>), validant la traversée des routeurs via l'agent de relais.</p>
+                </div>
+
+                <h3>B. Recette de la zone DNS et interconnectivité des services</h3>
+                <div class="tech-image-box">
+                    <img src="images/figure_ad_10.png" alt="Gestionnaire DNS">
+                    <p class="tech-image-caption">Figure 6 : Table des enregistrements d'hôtes (A) de la zone patapied.local</p>
+                    <p class="tech-image-analysis">Cette vue du Gestionnaire DNS détaille notre table de résolution de noms statique. Tous les serveurs de production sont correctement indexés : <code>serveur-apache</code> (<span class="tech-code">192.168.30.21</span>), <code>serveur-voip</code> (<span class="tech-code">192.168.30.22</span>), et <code>pc-admin</code> (<span class="tech-code">192.168.30.23</span>). L'alias <code>www</code> pointe également sur l'IP du serveur Apache, permettant aux utilisateurs d'atteindre le site e-commerce de manière transparente.</p>
+                </div>
+            </section>
+        </div>
+
+        <div id="tech-tab-router" class="tech-tab-content">
+            <section class="tech-section product-card" style="padding: 32px; margin-bottom: 32px; background: var(--white);">
+                <h2>1. Centralisation du Routage Inter-VLAN et Cœur de l'Infrastructure</h2>
+                <p>Le routeur d'entreprise <strong>Cisco C8200L</strong> constitue le pivot central de la couche 3 (Réseau) de la société Patapied. Son rôle est double : orchestrer l'acheminement des paquets entre les zones logiques segmentées (Routage Inter-VLAN) et assurer la liaison montante sécurisée vers le pare-feu Stormshield Network Security pour l'accès périmétrique externe.</p>
+                <h3>L'ingénierie du protocole "Router-on-a-Stick"</h3>
+                <p>Afin de rationaliser l'usage des interfaces physiques et de s'aligner sur la segmentation par VLAN opérée au niveau de la couche 2, la méthode de troncature <strong>802.1Q (Router-on-a-Stick)</strong> a été implémentée sur l'interface principale <span class="tech-code">GigabitEthernet0/0/0</span>.</p>
+                <p>Chaque sous-interface encapsule explicitement les balises (tags) issues des trames du switch d'accès et se voit attribuer la dernière adresse IP utile du segment (adresse <span class="tech-code">.254</span>) :</p>
+                <ul>
+                    <li><strong>VLAN 10 (Comptabilité &amp; Finance) :</strong> Sous-interface <span class="tech-code">Gi0/0/0.10</span> — IP <span class="tech-code">192.168.10.254/24</span></li>
+                    <li><strong>VLAN 20 (Ressources Humaines &amp; Wi-Fi) :</strong> Sous-interface <span class="tech-code">Gi0/0/0.20</span> — IP <span class="tech-code">192.168.20.254/24</span></li>
+                    <li><strong>VLAN 30 (Zone Serveurs &amp; SOC) :</strong> Sous-interface <span class="tech-code">Gi0/0/0.30</span> — IP <span class="tech-code">192.168.30.254/24</span></li>
+                    <li><strong>VLAN 40 (Réseau Invités) :</strong> Sous-interface <span class="tech-code">Gi0/0/0.40</span> — IP <span class="tech-code">192.168.40.254/24</span></li>
+                </ul>
+            </section>
+
+            <section class="tech-section product-card" style="padding: 32px; margin-bottom: 32px; background: var(--white);">
+                <h2>2. Relais DHCP Réseau (DHCP Helper-Address)</h2>
+                <p>Pour résoudre la rupture logique liée au blocage des messages de broadcast par le routeur, l'agent de relais <strong>DHCP Helper</strong> a été déployé. Les directives <span class="tech-code">ip helper-address 192.168.30.20</span> ont été injectées au cœur des sous-interfaces d'accès (<span class="tech-code">Gi0/0/0.10</span>, <span class="tech-code">Gi0/0/0.20</span> et <span class="tech-code">Gi0/0/0.40</span>). Le routeur intercepte ainsi les messages de découverte DHCP locaux, les encapsule dans des paquets unicast de couche 3, et les redirige directement vers l'adresse IP du serveur Windows.</p>
+            </section>
+
+            <section class="tech-section product-card" style="padding: 32px; background: var(--white);">
+                <h2>3. Fichier de Configuration Cisco IOS Propre et Audit</h2>
+                <div class="nano-mock" style="margin: 20px 0 12px 0;">
+                    <div class="nano-header"><span>GNU nano 7.2</span><span>/var/www/html/assets/cfg/config_routeur.cfg</span><span></span></div>
+                    <div class="nano-body" id="code-config-routeur" style="max-height: 450px; overflow-y: auto;">!
+! Last configuration change at 12:44:00 UTC Mon Jun 15 2026
+!
+version 17.6
+hostname R1-PATAPIED
+!
+ip name-server 192.168.117.181 192.168.117.182
+login on-success log
+!
+interface GigabitEthernet0/0/0
+ no ip address
+ negotiation auto
+!
+interface GigabitEthernet0/0/0.10
+ encapsulation dot1Q 10
+ ip address 192.168.10.254 255.255.255.0
+ ip helper-address 192.168.30.20
+!
+interface GigabitEthernet0/0/0.20
+ encapsulation dot1Q 20
+ ip address 192.168.20.254 255.255.255.0
+ ip helper-address 192.168.30.20
+!
+interface GigabitEthernet0/0/0.30
+ encapsulation dot1Q 30
+ ip address 192.168.30.254 255.255.255.0
+!
+interface GigabitEthernet0/0/0.40
+ encapsulation dot1Q 40
+ ip address 192.168.40.254 255.255.255.0
+ ip helper-address 192.168.30.20
+!
+interface GigabitEthernet0/0/1
+ description LIEN STORMSHIELD
+ ip address 10.0.0.2 255.255.255.252
+ negotiation auto
+!
+ip route 0.0.0.0 0.0.0.0 10.0.0.1
+!
+line con 0
+ stopbits 1
+line vty 0 4
+ login
+ transport input ssh
+line vty 5 14
+ login
+ transport input ssh
+!
+end</div>
+                    <div class="nano-footer">
+                        <div><span class="nano-cmd">^G</span> Get Help  </div>
+                        <div><span class="nano-cmd">^O</span> Write Out </div>
+                        <div><span class="nano-cmd">^R</span> Read File </div>
+                        <div><span class="nano-cmd">^Y</span> Prev Page </div>
+                        <div><span class="nano-cmd">^X</span> Exit     </div>
+                    </div>
+                </div>
+                <button class="btn" style="background: var(--ink); color: var(--cream); font-family: var(--font-mono); font-size: 0.8rem; padding: 6px 12px; border: 1px solid var(--stone); cursor: pointer;" onclick="downloadScript('config_routeur.cfg', 'code-config-routeur')">⬇ Télécharger config_routeur.cfg</button>
+            </section>
+        </div>
+
+        <div id="tech-tab-switch" class="tech-tab-content">
+            <section class="tech-section product-card" style="padding: 32px; margin-bottom: 32px; background: var(--white);">
+                <h2>1. Introduction et Enjeux de la Sécurisation de Couche 2</h2>
+                <p>Le commutateur d'accès constitue le point d'entrée physique de l'icombatibilité du parc de Patapied. Notre stratégie de durcissement vise à neutraliser les attaques de couche basse (Layer 2) courantes : l'usurpation de service réseau via un serveur DHCP frauduleux (<em>Rogue DHCP</em>) et la saturation de la table d'adresses MAC.</p>
+                <h3>A. Déploiement du DHCP Snooping</h3>
+                <p>Pour contrer les risques liés aux attaques de type <em>Rogue DHCP Server</em>, le DHCP Snooping a été implémenté à l'échelle du commutateur. Les ports d'infrastructure stratégiques (Cisco R1, AP Wifi, zone serveurs) sont configurés en mode <strong>Trusted</strong>, tandis que les ports utilisateurs d'accès restent en mode <strong>Untrusted</strong>, bloquant l'injection de trames DHCP manipulatrices.</p>
+                <div class="terminal">
+                    <div class="terminal__header">
+                        <div class="terminal__dot" style="background:#ff5f56"></div>
+                        <span style="font-size:.72rem;color:#6272a4;margin-left:8px;font-family:var(--font-mono);">console@SW-PATAPIED# show ip dhcp snooping</span>
+                    </div>
+                    <div class="terminal__body">SW-PATAPIED#show ip dhcp snooping
+Switch DHCP snooping is enabled
+DHCP snooping is configured on following VLANs:
+10,20,30,40
+Insertion of option 82 is disabled
+Interface                 Trusted
+-----------------------    -------
+GigabitEthernet1/0/1             yes
+GigabitEthernet1/0/2             yes
+GigabitEthernet1/0/3             yes</div>
+                </div>
+            </section>
+
+            <section class="tech-section product-card" style="padding: 32px; background: var(--white);">
+                <h2>2. Fichier de Configuration Actif Cisco IOS et Export Syslog</h2>
+                <div class="nano-mock" style="margin: 20px 0 12px 0;">
+                    <div class="nano-header"><span>GNU nano 7.2</span><span>/var/www/html/assets/cfg/config_switch.cfg</span><span></span></div>
+                    <div class="nano-body" id="code-config-switch" style="max-height: 450px; overflow-y: auto;">!
+! Last configuration change at 09:15:43 UTC Tue Jun 16 2026
+!
+version 17.12
+hostname SW-PATAPIED
+!
+ip dhcp snooping vlan 10,20,30,40
+no ip dhcp snooping information option
+ip dhcp snooping
+login on-success log
+!
+spanning-tree mode rapid-pvst
+spanning-tree extend system-id
+!
+interface GigabitEthernet1/0/1
+ description LIEN TRUNK VERS LE ROUTEUR CISCO
+ switchport mode trunk
+ ip dhcp snooping trust
+!
+interface GigabitEthernet1/0/2
+ description LIEN TRUNK VERS L'AP WIFI
+ switchport access vlan 20
+ switchport mode access
+ spanning-tree portfast
+ ip dhcp snooping trust
+!
+interface GigabitEthernet1/0/3
+ description SERVEURS
+ switchport access vlan 30
+ switchport mode access
+ spanning-tree portfast
+ ip dhcp snooping trust
+!
+interface GigabitEthernet1/0/7
+ description PC FINANCE
+ switchport access vlan 10
+ switchport mode access
+ switchport port-security maximum 2
+ switchport port-security mac-address sticky
+ switchport port-security
+ spanning-tree portfast
+!
+interface Vlan30
+ ip address 192.168.30.222 255.255.255.0
+!
+logging host 192.168.30.21
+!
+line vty 0 15
+ login
+ transport input ssh
+!
+end</div>
+                    <div class="nano-footer">
+                        <div><span class="nano-cmd">^X</span> Exit     </div>
+                    </div>
+                </div>
+                <button class="btn" style="background: var(--ink); color: var(--cream); font-family: var(--font-mono); font-size: 0.8rem; padding: 6px 12px; border: 1px solid var(--stone); cursor: pointer;" onclick="downloadScript('config_switch.cfg', 'code-config-switch')">⬇ Télécharger config_switch.cfg</button>
+            </section>
+        </div>
+
+        <div id="tech-tab-wifi" class="tech-tab-content">
+            <section class="tech-section product-card" style="padding: 32px; background: var(--white);">
+                <h2>1. Configuration Initiale et Écarts Capacitaires de la Maquette</h2>
+                <p>L'intégration de la borne Wi-Fi sans fil (<span class="tech-code">D-Link DAP-2020</span>) configurée en mode **Access Point** a mis en avant des limites matérielles d'interopérabilité importantes :</p>
+                <ul>
+                    <li><strong>Incompatibilité 802.1Q :</strong> La borne ne sait pas lire ou injecter les tags VLAN au sein de ses interfaces logiques.</li>
+                    <li><strong>Absence de Multi-SSID :</strong> Impossibilité de diffuser en parallèle les réseaux du personnel et des invités.</li>
+                </ul>
+                <p><strong>La parade de couche 2 :</strong> Pour contourner ce verrou, l'interface du switch Cisco associée (<span class="tech-code">Gi1/0/2</span>) a été basculée d'un lien Trunk à un port d'accès forcé dans le <strong>VLAN 20</strong>, déléguant au switch l'encapsulation logicielle.</p>
+                <div class="tech-image-box">
+                    <img src="images/photo_wifi5.png" alt="Bail DHCP obtenu par le client">
+                    <p class="tech-image-caption">Figure 7 : Paramètres IP attribués dynamiquement en WiFi (192.168.20.201)</p>
+                </div>
+            </section>
+        </div>
+
+        <div id="tech-tab-lamp" class="tech-tab-content">
+            <section class="tech-section product-card" style="padding: 32px; background: var(--white);">
+                <h2>1. Procédure de Déploiement de la Stack Web et Durcissement</h2>
+                <p>Toutes les phases d'initialisation des composants de la stack LAMP ont été exécutées sur notre instance Debian d'infrastructure (<span class="tech-code">192.168.30.21</span>).</p>
+                <p>Le choix d'ingénierie s'est porté sur **MariaDB** face à MySQL pour garantir un environnement 100 % libre, conforme nativement aux dépôts de Debian Bookworm, et doté de moteurs d'optimisation de requêtes transactionnelles plus véloces.</p>
+                <div class="window-mock">
+                    <div class="window-header"><span class="window-title">root@SRV-WEB-PATAPIED: ~</span></div>
+                    <div class="window-body"><span class="prompt-root">root@SRV-WEB-PATAPIED</span>:# <span class="prompt-cmd">mariadb-secure-installation</span>
+Change the root password? [Y/n] Y
+Remove anonymous users? [Y/n] Y
+Disallow root login remotely? [Y/n] Y
+Remove test database and access to it? [Y/n] Y
+Reload privilege tables now? [Y/n] Y</div>
+                </div>
+            </section>
+        </div>
+
+        <div id="tech-tab-stormshield" class="tech-tab-content">
+            <section class="tech-section product-card" style="padding: 32px; background: var(--white);">
+                <h2>1. Pivot Architectural de Sécurité Périphérique</h2>
+                <p>Afin de mettre en place une politique de sécurité industrielle filtrée, nous avons opéré un transfert complet du mécanisme de masquage réseau du routeur vers un pare-feu physique **Stormshield Network Security (SNS)**.</p>
+                <p>L'interconnexion s'effectue via une liaison d'adressage étanche configurée sur un masque de réseau strict en <span class="tech-code">10.0.0.0/30</span>.</p>
+                <div class="tech-image-box">
+                    <img src="images/figure_fw_2.png" alt="Routes statiques Stormshield">
+                    <p class="tech-image-caption">Figure 8 : Table des directions d'interconnexion statiques (Passerelle IUT &amp; Retour Cisco)</p>
+                </div>
+            </section>
+        </div>
+
+        <div id="tech-tab-voip" class="tech-tab-content">
+            <section class="tech-section product-card" style="padding: 32px; margin-bottom: 32px; background: var(--white);">
+                <h2>1. Déploiement de l'Infrastructure et Pivot Stratégique PJSIP</h2>
+                <p>En raison de l'impossibilité logicielle d'installer la surcouche graphique XiVO sur la maquette d'architecture, **100 % de l'infrastructure Asterisk a été configurée manuellement via l'éditeur Nano** au sein des fichiers textuels du dossier <span class="tech-code">/etc/asterisk/</span>.</p>
+                <p>Face à un conflit d'écoute asynchrone des sockets qui bloquait le combiné 102 en timeout, l'architecture a opéré une transition complète vers le protocole moderne **PJSIP**, nettoyant le fichier historique <span class="tech-code">sip.conf</span> au profit de structures de baux explicites.</p>
+                <div class="tech-image-box">
+                    <img src="images/figure_voip_6.png" alt="Console Asterisk Logs">
+                    <p class="tech-image-caption">Figure 9 : Logs d'activité de la console Asterisk (CLI) lors du traitement d'un appel interne</p>
+                </div>
+            </section>
+        </div>
+
+        <div id="tech-tab-voip-en" class="tech-tab-content">
+            <section class="tech-section product-card" style="padding: 32px; margin-bottom: 32px; background: var(--white);">
+                <h2>1. Introduction and Challenges of Voice over IP</h2>
+                <p>The <strong>Patapied</strong> company required a local telephony solution capable of interconnecting workstations without relying on traditional telecom operator lines. The engineering choice landed exclusively on <strong>Asterisk</strong>, hosted on the same Debian Linux instance as the company's other corporate services.</p>
+                <p>Due to local staging matrix restrictions, deploying XiVO was technically impossible. This operational bottleneck required a pure engineering approach: <strong>100% of the architecture was manually configured via command-line</strong> by editing text-based configuration files using the <strong>Nano</strong> editor.</p>
+                <div class="tech-image-box">
+                    <img src="images/figure_voip_7.png" alt="Asterisk CLI Diagnostics">
+                    <p class="tech-image-caption">Figure 10: Final Acceptance Report — Network Diagnostics via the 'pjsip show endpoints' command</p>
+                </div>
+            </section>
+        </div>
+
+        <div id="tech-tab-soc" class="tech-tab-content">
+            <section class="tech-section product-card" style="padding: 32px; background: var(--white);">
+                <h2>1. Choix et Développement des Sondes de Corrélation (Bash)</h2>
+                <p>Plutôt que de déployer des solutions tierces lourdes, l'équipe a programmé **ses propres sondes en Bash** couplées à une architecture asynchrone AJAX via Fetch API, rafraîchissant l'interface d'administration toutes les 2,5 secondes.</p>
+                <div class="nano-mock" style="margin: 20px 0 12px 0;">
+                    <div class="nano-header"><span>GNU nano 7.2</span><span>/usr/local/bin/mon_gardien.sh</span><span></span></div>
+                    <div class="nano-body" id="code-mon-gardien-soc">#!/bin/bash
+# /usr/local/bin/mon_gardien.sh — Sonde Brute-Force (SOC Patapied)
+FICHIER_LOG="/var/log/apache2/access.log"
+stdbuf -oL tail -F "$FICHIER_LOG" | while read -r ligne; do
+    if [[ "$ligne" == *"POST"* ]] && [[ "$ligne" == *"401"* ]]; then
+        ip_attaquant=$(echo "$ligne" | awk '{print $1}')
+        sudo /usr/sbin/iptables -A INPUT -s "$ip_attaquant" -j DROP
+    fi
+done</div>
+                </div>
+            </section>
+        </div>
+
+        <div id="tech-tab-samba" class="tech-tab-content">
+            <section class="tech-section product-card" style="padding: 32px; background: var(--white);">
+                <h2>1. Partage Documentaire Collaboratif et Quotas Individuels</h2>
+                <p>Pour assurer le stockage sécurisé des documents, nous avons déployé un serveur de fichiers via **Samba** avec chiffrement obligatoire **SMBv3** au sein de notre fichier <span class="tech-code">smb.conf</span>.</p>
+                <p>Le cloisonnement logique capacitaire est géré via le module de gestion de fichiers `ext4` de Linux avec l'outil de quotas unitaires, imposant un blocage matériel dur de **10 Go** par utilisateur (Finance / RH).</p>
+                <div class="tech-image-box">
+                    <img src="images/screenshot_lecteur_rh_functional.png" alt="Lecteur RH">
+                    <p class="tech-image-caption">Figure 11 : Maintien de l'espace de stockage RH (R:) malgré la saturation complète du volume Finance</p>
+                </div>
+            </section>
+        </div>
+
+        <div id="tech-tab-sauvegarde" class="tech-tab-content">
+            <section class="tech-section product-card" style="padding: 32px; background: var(--white);">
+                <h2>1. Centralisation des Politiques de Sauvegarde (Cron &amp; WSB)</h2>
+                <p>La continuité d'activité de l'infrastructure Patapied s'articule autour de deux mécanismes de sauvegarde asynchrones centralisés vers le répertoire `/var/backups/patapied` de notre Debian :</p>
+                <ul>
+                    <li><strong>Côté Linux (Asterisk) :</strong> Exécution d'un script Bash automatique d'archivage `backup_voip.sh` poussé par liaison de clés SSH Ed25519 chaque nuit via une tâche **Cron** à 00h00.</li>
+                    <li><strong>Côté Windows (Active Directory) :</strong> Planification de l'extraction de l'**État du système (System State)** via la fonctionnalité native *Windows Server Backup* vers notre partage réseau Samba.</li>
+                </ul>
+                <div class="tech-image-box">
+                    <img src="images/screenshot_windows_backup_planified.png" alt="Tâche Windows Backup">
+                    <p class="tech-image-caption">Figure 12 : Enregistrement et validation finale de la tâche de sauvegarde d'état système AD</p>
+                </div>
+            </section>
+        </div>
+
+        <footer style="margin-top: 40px; text-align: center; padding: 20px 0; color: var(--ink-light); font-family: var(--font-sans); font-size: 0.85rem; border-top: 1px dashed var(--cream-dark);">
+            Patapied Network Engineering &copy; 2026 — Rapport Interne Réseau &amp; Systèmes
+        </footer>
+    </div>
+
+    <footer class="site-footer" style="background: var(--forest-dark); color: var(--white); padding: 40px 0; margin-top: 64px; font-family: var(--font-sans);">
+        <div class="footer-inner" style="max-width: var(--max-w); margin: 0 auto; display: flex; justify-content: space-between; flex-wrap: wrap; padding: 0 20px; gap: 30px;">
+            <div class="footer-brand">
+                <span class="logo-mark" style="font-family: var(--font-serif); font-size: 1.8rem; color: var(--cream);">P</span>
+                <span class="logo-text" style="font-family: var(--font-serif); font-size: 1.5rem; font-weight: bold; margin-left: 2px;">atapied</span>
+                <p style="color: rgba(255,255,255,0.6); font-size: 0.9rem; margin-top: 10px;">Chaussures urbaines ergonomiques<br>conçues en France.</p>
+            </div>
+            <div class="footer-bottom" style="width: 100%; text-align: center; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); margin-top: 20px; font-size: 0.8rem; color: rgba(255,255,255,0.4); display: flex; justify-content: space-between; flex-wrap: wrap;">
+                <span>&copy; 2026 Patapied. Tous droits réservés.</span>
+                <span>Réalisé par JOSSERAND · JOYEUX · MAGE — BUT R&amp;T 2026</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function switchTechTab(tabId) {
+            // Masquer tous les contenus d'onglets
+            document.querySelectorAll('.tech-tab-content').forEach(tab => {
+                tab.style.display = 'none';
+                tab.classList.remove('active');
+            });
+            
+            // Activer le bloc cible
+            const targetTab = document.getElementById('tech-tab-' + tabId);
+            if (targetTab) {
+                targetTab.style.display = 'block';
+                targetTab.classList.add('active');
+            }
+            
+            // Synchroniser la valeur du select
+            const selector = document.getElementById('tech-tab-selector');
+            if (selector && selector.value !== tabId) {
+                selector.value = tabId;
+            }
+        }
+
+        function moveTab(direction) {
+            const selector = document.getElementById('tech-tab-selector');
+            if (!selector) return;
+            
+            let currentIndex = selector.selectedIndex;
+            let nextIndex = currentIndex + direction;
+            
+            // Bouclage infini du menu déroulant (circulaire)
+            if (nextIndex < 0) {
+                nextIndex = selector.options.length - 1;
+            } else if (nextIndex >= selector.options.length) {
+                nextIndex = 0;
+            }
+            
+            selector.selectedIndex = nextIndex;
+            switchTechTab(selector.value);
+        }
+
+        function downloadScript(filename, elementId) {
+            const element = document.getElementById(elementId);
+            if (!element) return;
+            
+            const text = element.innerText || element.textContent;
+            const blob = new Blob([text], { type: 'text/x-sh;charset=utf-8;' });
+            const link = document.createElement("a");
+            
+            if (link.download !== undefined) {
+                const url = URL.createObjectURL(blob);
+                link.setAttribute("href", url);
+                link.setAttribute("download", filename);
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        }
+    </script>
+</body>
+</html>
